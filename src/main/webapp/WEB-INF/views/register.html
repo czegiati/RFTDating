@@ -1,0 +1,61 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
+   <head>
+      <link href = "css/styles.css" rel = "stylesheet"/>
+      <title>Dating Site Registration</title>
+   </head>
+   <body>
+   <h3>Registration form</h3>
+   <form action="#" th:action="@{/register}" th:object="${User}"
+         method="post">
+   <table>
+      <tr>
+         <td><label name="username">Username: </label></td>
+         <td><input type="text" th:field="*{username}"/></td>
+         <td><p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Incorrect username</p></td>
+      </tr>
+      <tr>
+         <td><label name="full_name">Full name: </label></td>
+         <td><input type="text" th:field="*{full_name}"/></td>
+         <td><p th:if="${#fields.hasErrors('full_name')}" th:errors="*{full_name}">Incorrect username</p></td>
+      </tr>
+      <tr>
+         <td><label name="birthdate">Birth date: </label></td>
+         <td><input type="date" th:field="*{birthdate}"  value="2010-10-10" title="You must be 18 or older, in order to use this site!"></td>
+         <td><p th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">Incorrect username</p></td>
+      </tr>
+      <tr>
+         <td><label name="sex">Sex: </label></td>
+         <td>
+            <select  th:field="*{sex}">
+               <option th:each="sex1:${sexList}"
+               th:value="${sex1}"
+               th:text="${sex1}"/>
+            </select>
+         </td>
+      </tr>
+      <tr>
+         <td><label name="sexualOrientation" >Sexual Orientation: </label></td>
+         <td>
+            <select th:field="*{sexualOrientation}">
+               <option th:each="sexo1:${sexoList}" th:value="${sexo1}" th:text="${sexo1}"/>
+            </select>
+
+         </td>
+      </tr>
+      <tr>
+         <td><label name="email">Email: </label></td>
+         <td><input type="email" th:field="*{email}"/></td>
+         <td><p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect username</p></td>
+      </tr>
+      <tr>
+         <td><label name="password">Password: </label></td>
+         <td><input type="password" th:field="*{password}"/></td>
+         <td><p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect username</p></td>
+      </tr>
+      <tr>
+         <td><input type="submit" id="submitButton" th:value="register" /></td>
+      </tr>
+   </table>
+   </form>
+   </body>
+</html>

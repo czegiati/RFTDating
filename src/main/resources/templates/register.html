@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
+   <head>
+      <link href = "css/styles.css" rel = "stylesheet"/>
+      <title>Dating Site Registration</title>
+   </head>
+   <body>
+   <h3>Registration form</h3>
+   <form action="#" th:action="@{/register}" th:object="${User}"
+         method="post">
+   <table>
+      <tr>
+         <td><label name="username">Username: </label></td>
+         <td><input type="text" path="username"/></td>
+      </tr>
+      <tr>
+         <td><label name="full_name">Full name: </label></td>
+         <td><input type="text" path="full_name"/></td>
+      </tr>
+      <tr>
+         <td><label name="birthdate">Birth date: </label></td>
+         <td><input type="date" th:field="*{birthdate}"/></td>
+      </tr>
+      <tr>
+         <td><label name="sex" th:field="*{sex}">Sex: </label></td>
+         <td>
+            <select>
+               <option th:value="0">male</option>
+               <option th:value="1">female</option>
+            </select>
+         </td>
+      </tr>
+      <tr>
+         <td><label name="sexualorientation">Sexual Orientation: </label></td>
+         <td>
+            <select th:field="*{sexual_orentation}">
+               <option th:value="0">bisexual</option>
+               <option th:value="1">heterosexual (straight)</option>
+               <option th:value="2">homosexual (geh)</option>
+            </select>
+
+         </td>
+      </tr>
+      <tr>
+         <td><label name="email">Email: </label></td>
+         <td><input type="email" th:field="*{email}"/></td>
+      </tr>
+      <tr>
+         <td><label name="password">Password: </label></td>
+         <td><input type="password" th:field="*{password}"/></td>
+      </tr>
+      <tr>
+         <td><input type="submit" id="submitButton" th:value="register" /></td>
+      </tr>
+   </table>
+   </form>
+   </body>
+</html>
