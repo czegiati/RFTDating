@@ -6,6 +6,7 @@
 
 
 2,Open MySQL comand line client and type in the followings:
+
   mysql> create database db_example; -- Creates the new database
   
   mysql> create user 'springuser'@'%' identified by 'ThePassword'; -- Creates the user
