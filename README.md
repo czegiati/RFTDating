@@ -24,3 +24,5 @@
  
  
 3,Start the application 
+
+4, http://localhost:9090/
