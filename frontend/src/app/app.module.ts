@@ -9,6 +9,8 @@ import { LoginComponent } from '../auth/login/login.component';
 import { AuthModule } from '../auth/auth.module';
 import { RegisterComponent } from '../auth/register/register.component';
 import { AuthService } from '../services/auth.service';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { AuthService } from '../services/auth.service';
     BrowserAnimationsModule,
     HttpClientModule,
     AuthModule,
+    MatToolbarModule,
+    MatIconModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent },
       { path: 'register', component: RegisterComponent }

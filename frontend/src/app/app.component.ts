@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,13 @@ import { UserService } from '../services/user.service';
 })
 export class AppComponent {
   title = 'frontend';
-  constructor(userservice: UserService){
+
+  public users: User[];
+  constructor(userservice: UserService) {
     userservice.findAll().then((result) => {
       console.log(result);
+      this.users = result;
     });
   }
+
 }

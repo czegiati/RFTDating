@@ -1,4 +1,24 @@
-<div>App Container</div>
+<header>
+  <nav>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>B Mine Dating app</span>
+      <span class="spacer"></span>
+
+      <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon">favorite</mat-icon>
+
+      <a [routerLink]="'/register'">Register</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  </nav>
+</header>
 <router-outlet></router-outlet>
-<div>Footer</div>
-<!-- Routed components go here -->
+
+<div>
+  <p>Existing users:</p>
+  <ul>
+    <li *ngFor="let user of users">{{user.username}}</li>
+  </ul>
+</div>
+
+<footer>This project is available at <a href="https://github.com/czegiati/RFTDating">GitHub</a>.</footer>
