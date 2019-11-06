@@ -4,12 +4,14 @@ package hu.unideb.RFTDatingSite.controller;
 import hu.unideb.RFTDatingSite.Model.Sex;
 import hu.unideb.RFTDatingSite.Model.SexualOrientation;
 import hu.unideb.RFTDatingSite.Model.User;
+import hu.unideb.RFTDatingSite.Model.forms.UserLoginForm;
 import hu.unideb.RFTDatingSite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -33,10 +37,6 @@ public class MyController {
     return "index";
     }
 
-    @GetMapping("/login")
-    public String login(Model model){
-        return "login";
-    }
 
     @GetMapping("/register")
     public String register(Model model){
@@ -47,14 +47,32 @@ public class MyController {
 
     @PostMapping("/register")
     public String save(@Valid @ModelAttribute("User") User user, BindingResult errors,Model model) {
-        setRegistrationModel(model);
         if(errors.hasErrors())
         {
+            setRegistrationModel(model);
             return "register";
         }
-        System.out.println(user);
-        userService.createUser(user);
-        return "redirect:/login";
+        else
+            {
+            userService.createUser(user);
+            return "redirect:/login";
+        }
+    }
+
+    @GetMapping("/login")
+    public String login(Model model){
+        model.addAttribute("User",new UserLoginForm());
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login1(@Valid @ModelAttribute("User") UserLoginForm user, BindingResult errors,Model model) {
+        if(errors.hasErrors())
+        {
+            return "login";
+        }
+        model.addAttribute("User", user);
+        return "logedin";
     }
 
 

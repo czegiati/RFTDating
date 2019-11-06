@@ -3,18 +3,32 @@ package hu.unideb.RFTDatingSite.service;
 import hu.unideb.RFTDatingSite.Model.User;
 import hu.unideb.RFTDatingSite.exception.ResourceNotFoundException;
 import hu.unideb.RFTDatingSite.repository.UserRepository;
+import org.hibernate.Session;
+import org.hibernate.jpa.internal.PersistenceUnitUtilImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.metamodel.Metamodel;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
+
     @Override
     public User createUser(User user) {
         return userRepository.save(user);
@@ -68,4 +82,30 @@ public class UserServiceImpl implements UserService {
 
         }
     }
+
+    @Override
+    public boolean isUsername(String username) {
+        User u=userRepository.getUsersByUsername(username);
+        if(username.equals("") ) return false;
+        if(u!=null) return true;
+            return false;
+    }
+
+    @Override
+    public boolean isEmail(String email) {
+        User u=userRepository.getUsersByEmail(email);
+        System.out.println(u);
+        if(email.equals("") ) return false;
+        if(u!=null) return true;
+        return false;
+    }
+
+    @Override
+    public boolean correctLogIn(String username, String password) {
+        User u=userRepository.getUsersByUsername(username);
+        if(u.getPassword().equals(password)) return true;
+        else return false;
+    }
+
+
 }

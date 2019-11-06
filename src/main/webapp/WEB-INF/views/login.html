@@ -10,20 +10,23 @@
    </head>
    <body>
    <h4>Please login in ;)</h4>
+   <form action="#" th:action="@{/login}" th:object="${User}"
+         method="post">
    <table>
       <tr>
-         <th><h4>Email address: </h4></th>
-         <th><input type="text" name="loginform.username" class="button"/></th>
+         <th><h4>Username: </h4></th>
+         <th><input type="text" th:field="*{username}" class="button"/></th>
       </tr>
       <tr>
          <td><h4>Password: </h4></td>
-         <td><input type="password" name="loginform.password" class="button" /></td>
+         <td><input type="password" th:field="*{password}" class="button" /></td>
       </tr>
       <tr>
-         <td><input type="submit" name="loginform.login" class="button" value="Log In" /></td>
-         <td><input type="submit" th:onclick="window.location.href='/register';" value="Register"/></td>
+         <td><input type="submit" id="submitButton" th:value="login" /></td>
+         <td><p th:if="${#fields.hasAnyErrors()}" t th:errors="*{all}">Incorrect username</p></td>
       </tr>
    </table>
+      </form>
 
 
    </body>
