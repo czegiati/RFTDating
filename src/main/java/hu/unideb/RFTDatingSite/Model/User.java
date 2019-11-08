@@ -46,6 +46,20 @@ public class User {
     @Size(min=4,max=20, message = "The password should have at least 4 and maximum 20 characters!")
     String password;
 
+    public User(){}
+    public User(User user) {
+        this.user_id=user.getUser_id();
+        this.username=user.getUsername();
+        this.full_name=user.getFull_name();
+        this.birthdate=user.getBirthdate();
+        this.sex=user.getSex();
+        this.sexualOrientation=user.getSexualOrientation();
+        this.bio=user.getBio();
+        this.email=user.getEmail();
+        this.password=user.getPassword();
+
+    }
+
 
     public String getPassword() {
         return password;

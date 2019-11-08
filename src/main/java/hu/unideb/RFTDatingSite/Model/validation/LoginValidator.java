@@ -21,6 +21,7 @@ public class LoginValidator implements ConstraintValidator<LoginValidation, User
 
     @Override
     public boolean isValid(UserLoginForm value, ConstraintValidatorContext context) {
+        System.out.println(userService.correctLogIn(value.getUsername(),value.getPassword()));
         return userService.correctLogIn(value.getUsername(),value.getPassword());
     }
 }

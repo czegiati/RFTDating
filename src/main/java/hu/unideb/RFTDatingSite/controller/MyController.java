@@ -7,6 +7,8 @@ import hu.unideb.RFTDatingSite.Model.User;
 import hu.unideb.RFTDatingSite.Model.forms.UserLoginForm;
 import hu.unideb.RFTDatingSite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +33,7 @@ public class MyController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String index(Model model){
         model.addAttribute("message","I'm ugly, please format me :'(");
     return "index";
@@ -40,9 +42,15 @@ public class MyController {
 
     @GetMapping("/register")
     public String register(Model model){
-        model.addAttribute("User",new User());
-        setRegistrationModel(model);
-        return "register";
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(principal instanceof UserDetails)) {
+            model.addAttribute("User",new User());
+            setRegistrationModel(model);
+            return "register";
+        } else {
+            return "logedin";
+        }
+
     }
 
     @PostMapping("/register")
@@ -58,23 +66,6 @@ public class MyController {
             return "redirect:/login";
         }
     }
-
-    @GetMapping("/login")
-    public String login(Model model){
-        model.addAttribute("User",new UserLoginForm());
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String login1(@Valid @ModelAttribute("User") UserLoginForm user, BindingResult errors,Model model) {
-        if(errors.hasErrors())
-        {
-            return "login";
-        }
-        model.addAttribute("User", user);
-        return "logedin";
-    }
-
 
 
     private void setRegistrationModel(Model model){
