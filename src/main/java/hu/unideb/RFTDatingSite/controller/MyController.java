@@ -4,12 +4,16 @@ package hu.unideb.RFTDatingSite.controller;
 import hu.unideb.RFTDatingSite.Model.Sex;
 import hu.unideb.RFTDatingSite.Model.SexualOrientation;
 import hu.unideb.RFTDatingSite.Model.User;
+import hu.unideb.RFTDatingSite.Model.forms.UserLoginForm;
 import hu.unideb.RFTDatingSite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -27,36 +33,39 @@ public class MyController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String index(Model model){
         model.addAttribute("message","I'm ugly, please format me :'(");
     return "index";
     }
 
-    @GetMapping("/login")
-    public String login(Model model){
-        return "login";
-    }
 
     @GetMapping("/register")
     public String register(Model model){
-        model.addAttribute("User",new User());
-        setRegistrationModel(model);
-        return "register";
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(principal instanceof UserDetails)) {
+            model.addAttribute("User",new User());
+            setRegistrationModel(model);
+            return "register";
+        } else {
+            return "logedin";
+        }
+
     }
 
     @PostMapping("/register")
     public String save(@Valid @ModelAttribute("User") User user, BindingResult errors,Model model) {
-        setRegistrationModel(model);
         if(errors.hasErrors())
         {
+            setRegistrationModel(model);
             return "register";
         }
-        System.out.println(user);
-        userService.createUser(user);
-        return "redirect:/login";
+        else
+            {
+            userService.createUser(user);
+            return "redirect:/login";
+        }
     }
-
 
 
     private void setRegistrationModel(Model model){
@@ -75,6 +84,5 @@ public class MyController {
         }
         model.addAttribute("sexoList",sexoList);
     }
-    //
 
 }
