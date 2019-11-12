@@ -33,12 +33,6 @@ public class MyController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/index")
-    public String index(Model model){
-        model.addAttribute("message","I'm ugly, please format me :'(");
-    return "index";
-    }
-
 
     @GetMapping("/register")
     public String register(Model model){
@@ -48,7 +42,7 @@ public class MyController {
             setRegistrationModel(model);
             return "register";
         } else {
-            return "logedin";
+            return "redirect:/logedin";
         }
 
     }
