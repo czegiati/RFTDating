@@ -1,6 +1,8 @@
 package hu.unideb.RFTDatingSite.Model;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import static java.util.Calendar.*;
@@ -41,4 +43,12 @@ public class DateFunctions {
         cal.setTime(date);
         return cal;
     }
+
+    public static String getDateFromYearsAgoInString(int years) throws ParseException {
+        Calendar cal = Calendar.getInstance();
+        Calendar b = getCalendar(new java.util.Date());
+        cal.set(YEAR, b.get(YEAR)-years);
+       return cal.get(YEAR)+"-"+cal.get(MONTH)+"-"+cal.get(DAY_OF_MONTH);
+    }
+
 }

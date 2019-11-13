@@ -16,4 +16,6 @@ public interface UserService {
 
     boolean correctLogIn(String username,String password);
 
+    List<User> getUsersInAgeRange(int min,int max);
+
 }

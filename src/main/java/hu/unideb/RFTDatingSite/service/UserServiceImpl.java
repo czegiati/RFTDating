@@ -1,5 +1,6 @@
 package hu.unideb.RFTDatingSite.service;
 
+import hu.unideb.RFTDatingSite.Model.DateFunctions;
 import hu.unideb.RFTDatingSite.Model.User;
 import hu.unideb.RFTDatingSite.exception.ResourceNotFoundException;
 import hu.unideb.RFTDatingSite.repository.UserRepository;
@@ -18,10 +19,10 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -111,6 +112,26 @@ public class UserServiceImpl implements UserService {
         User u=userRepository.getUsersByUsername(username);
         if(u.getPassword().equals(passwordEncoder.encode(password))) return true;
         else return false;
+    }
+
+    @Override
+    public List<User> getUsersInAgeRange(int min, int max) {
+
+        List list= null;
+        try {
+            list = userRepository.getUsersBornBetween(
+                    new SimpleDateFormat("yyyy-MM-dd").parse(DateFunctions.getDateFromYearsAgoInString(max)),
+                    new SimpleDateFormat("yyyy-MM-dd").parse(DateFunctions.getDateFromYearsAgoInString(min))).stream().collect(Collectors.toList());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Dates : ");
+        for(Object u:list)
+        {
+            System.out.println(((User)u).toString());
+        }
+        return list;
     }
 
 

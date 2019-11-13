@@ -1,8 +1,12 @@
 package hu.unideb.RFTDatingSite.controller;
 
+import hu.unideb.RFTDatingSite.Model.DateFunctions;
 import hu.unideb.RFTDatingSite.Model.forms.LogedInInfo;
 import hu.unideb.RFTDatingSite.Model.forms.UserLoginForm;
 import hu.unideb.RFTDatingSite.Model.validation.LoginValidation;
+import hu.unideb.RFTDatingSite.repository.UserRepository;
+import hu.unideb.RFTDatingSite.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +25,8 @@ import javax.validation.Valid;
 @Controller
 public class LoginController
 {
+    @Autowired
+    UserService userService;
 
     @GetMapping("/login")
     public String login(){
@@ -41,12 +47,10 @@ public class LoginController
       } else {
           username = principal.toString();
       }
-      System.out.println(username);
       LogedInInfo info=new LogedInInfo();
       info.setUsername(username);
       model.addAttribute("logeininfo",info);
       return "logedin";
-
 
   }
 
