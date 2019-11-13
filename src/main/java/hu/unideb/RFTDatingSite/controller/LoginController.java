@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class LoginController
@@ -76,7 +77,9 @@ public class LoginController
       if(searchForm.getMin()==null) searchForm.setMin(18);
       if(searchForm.getMax()==null || searchForm.getMax()>= 120) searchForm.setMax(100);
 
-      for(User u: (userService.getUsersInSearch(user,searchForm.getMin(),searchForm.getMax())))
+      List<User> users=userService.getUsersInSearch(user,searchForm.getMin(),searchForm.getMax());
+      if(users.contains(user)) users.remove(user);
+      for(User u: users)
       {
           SearchedUsersForm f=new SearchedUsersForm();
           f.setAge(DateFunctions.yearsPassedSince(u.getBirthdate()));
