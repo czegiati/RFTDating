@@ -17,5 +17,7 @@ public interface UserService {
     boolean correctLogIn(String username,String password);
 
     List<User> getUsersInAgeRange(int min,int max);
+    List<User> getUsersInSearch(User user,int min, int max);
+    User getUserByUsername(String username);
 
 }

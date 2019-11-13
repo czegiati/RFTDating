@@ -1,6 +1,8 @@
 package hu.unideb.RFTDatingSite.service;
 
 import hu.unideb.RFTDatingSite.Model.DateFunctions;
+import hu.unideb.RFTDatingSite.Model.Sex;
+import hu.unideb.RFTDatingSite.Model.SexualOrientation;
 import hu.unideb.RFTDatingSite.Model.User;
 import hu.unideb.RFTDatingSite.exception.ResourceNotFoundException;
 import hu.unideb.RFTDatingSite.repository.UserRepository;
@@ -126,12 +128,75 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
 
-        System.out.println("Dates : ");
-        for(Object u:list)
-        {
-            System.out.println(((User)u).toString());
-        }
         return list;
+    }
+
+    @Override
+    public List<User> getUsersInSearch(User user,int min, int max){
+        List<User> users=new ArrayList<>();
+        List<User> agelist= getUsersInAgeRange(min,max);
+            switch (user.getSexualOrientation()){
+                case bisexual:
+                    System.out.println("bisexual user detected");
+                    if(user.getSex().equals(Sex.male)) //male user
+                    {   //bi and homo males
+                        users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.male) &&
+                                ( o.getSexualOrientation().equals(SexualOrientation.bisexual)
+                                || o.getSexualOrientation().equals(SexualOrientation.homosexual))).collect(Collectors.toList()));
+                        //bi and hetero females
+                        users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.female) &&
+                                ( o.getSexualOrientation().equals(SexualOrientation.bisexual)
+                                        || o.getSexualOrientation().equals(SexualOrientation.heterosexual))).collect(Collectors.toList()));
+                    }
+                    else{
+                        //female user
+                        //bi and hetero males
+                        users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.male) &&
+                                ( o.getSexualOrientation().equals(SexualOrientation.bisexual)
+                                        || o.getSexualOrientation().equals(SexualOrientation.heterosexual))).collect(Collectors.toList()));
+                        //bi and homo females
+                        users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.female) &&
+                                ( o.getSexualOrientation().equals(SexualOrientation.bisexual)
+                                        || o.getSexualOrientation().equals(SexualOrientation.homosexual))).collect(Collectors.toList()));
+                    }
+                    break;
+                case homosexual:
+                    System.out.println("Fag detected");
+                    if(user.getSex().equals(Sex.male))
+                    {
+                        users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.male) &&
+                                ( o.getSexualOrientation().equals(SexualOrientation.bisexual)
+                                        || o.getSexualOrientation().equals(SexualOrientation.homosexual))).collect(Collectors.toList()));
+                    }
+                    else
+                    {
+                        users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.female) &&
+                                ( o.getSexualOrientation().equals(SexualOrientation.bisexual)
+                                        || o.getSexualOrientation().equals(SexualOrientation.homosexual))).collect(Collectors.toList()));
+                    }
+                    break;
+                case heterosexual:
+                    System.out.println("Hetero detected");
+                    if(user.getSex().equals(Sex.male))
+                    {
+                        users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.female) &&
+                                ( o.getSexualOrientation().equals(SexualOrientation.bisexual)
+                                        || o.getSexualOrientation().equals(SexualOrientation.heterosexual))).collect(Collectors.toList()));
+                    }
+                    else
+                    {
+                        users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.male) &&
+                                ( o.getSexualOrientation().equals(SexualOrientation.bisexual)
+                                        || o.getSexualOrientation().equals(SexualOrientation.heterosexual))).collect(Collectors.toList()));
+                    }
+                    break;
+            }
+        return users;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.getUsersByUsername(username);
     }
 
 

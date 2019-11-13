@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Search</title>
+</head>
+<body>
+<h1 th:inline="text">Search!</h1>
+<form action="#" th:action="@{/logedin/search}" th:object="${SearchFormObj}"
+      method="post">
+<table>
+    <tr>
+        <label>Minimum: </label>
+        <input type="number" th:field="*{min}"/>
+    </tr>
+    <tr>
+        <td>
+        <lable>Maximum: </lable>
+        <input type="number" th:field="*{max}"/>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="Search"/> </td>
+    </tr>
+</table>
+</form>
+    <table>
+        <thead>
+        <tr>
+            <td>username</td>
+            <td>age</td>
+            <td>Sex</td>
+            <td>SexualOrientation</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${SearchUsersObj}">
+            <td><p th:text="${user.username}"></p></td>
+            <td><p th:text="${user.age}"></p></td>
+            <td><p th:text="${user.sex}"></p></td>
+            <td><p th:text="${user.sexualOrientation}"></p></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
