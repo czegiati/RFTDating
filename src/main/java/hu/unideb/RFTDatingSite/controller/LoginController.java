@@ -2,10 +2,7 @@ package hu.unideb.RFTDatingSite.controller;
 
 import hu.unideb.RFTDatingSite.Model.DateFunctions;
 import hu.unideb.RFTDatingSite.Model.User;
-import hu.unideb.RFTDatingSite.Model.forms.LogedInInfo;
-import hu.unideb.RFTDatingSite.Model.forms.SearchForm;
-import hu.unideb.RFTDatingSite.Model.forms.SearchedUsersForm;
-import hu.unideb.RFTDatingSite.Model.forms.UserLoginForm;
+import hu.unideb.RFTDatingSite.Model.forms.*;
 import hu.unideb.RFTDatingSite.Model.validation.LoginValidation;
 import hu.unideb.RFTDatingSite.repository.UserRepository;
 import hu.unideb.RFTDatingSite.service.UserService;
@@ -90,6 +87,20 @@ public class LoginController
       }
       model.addAttribute("SearchUsersObj",list);
       return "searcher";
+  }
+
+  @GetMapping("/logedin/search/{username}")
+    public String viewProfileOfOthers(@RequestParam(value="username",required = true)String username,Model model){
+        User user= userService.getUserByUsername(username);
+      OthersProfileView opw=new OthersProfileView();
+      opw.setAge(DateFunctions.yearsPassedSince(user.getBirthdate()));
+      opw.setBio(user.getBio());
+      opw.setSex(user.getSex());
+      opw.setUsername(user.getUsername());
+      opw.setSo(user.getSexualOrientation());
+      model.addAttribute("user",opw);
+      System.out.println("OPW: "+opw);
+        return "othersprofileview";
   }
 
 }

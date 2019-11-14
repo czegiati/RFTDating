@@ -20,4 +20,10 @@ User getUsersByEmail(@Param("email")String email);
 
 @Query("select u from User u where u.birthdate>= :mindate and u.birthdate <= :maxdate ")
 Set<User> getUsersBornBetween(@Param("mindate") java.util.Date mindate, @Param("maxdate")java.util.Date maxdate);
+
+
+
+
 }
+
+

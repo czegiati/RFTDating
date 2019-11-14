@@ -34,10 +34,12 @@
         </thead>
         <tbody>
         <tr th:each="user : ${SearchUsersObj}">
-            <td><p th:text="${user.username}"></p></td>
-            <td><p th:text="${user.age}"></p></td>
-            <td><p th:text="${user.sex}"></p></td>
-            <td><p th:text="${user.sexualOrientation}"></p></td>
+            <form th:action="@{/}">
+                <td><a th:text="${user.username}" href="#" th:href="@{/logedin/search/__${user.username}__(username=${user.username})}"></a></td>
+                <td><p th:text="${user.age}"></p></td>
+                <td><p th:text="${user.sex}"></p></td>
+                <td><p th:text="${user.sexualOrientation}"></p></td>
+            </form>
         </tr>
         </tbody>
     </table>
