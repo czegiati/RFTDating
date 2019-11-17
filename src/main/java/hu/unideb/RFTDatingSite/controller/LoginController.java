@@ -62,7 +62,7 @@ public class LoginController
         model.addAttribute("SearchFormObj",new SearchForm());
       ArrayList<SearchedUsersForm> list=new ArrayList<>();
       model.addAttribute("SearchUsersObj",list);
-        return "searcher";
+        return "searcher2";
   }
 
   @PostMapping("/logedin/search")
@@ -86,7 +86,7 @@ public class LoginController
           list.add(f);
       }
       model.addAttribute("SearchUsersObj",list);
-      return "searcher";
+      return "searcher2";
   }
 
   @GetMapping("/logedin/search/{username}")
