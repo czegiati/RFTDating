@@ -1,32 +1,36 @@
 package hu.unideb.RFTDatingSite.Model;
 
 import hu.unideb.RFTDatingSite.Model.validation.MinimumYearsSince;
+import hu.unideb.RFTDatingSite.Model.validation.UniqueEmail;
+import hu.unideb.RFTDatingSite.Model.validation.UniqueUsername;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
 import javax.validation.Constraint;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.Locale;
 
 import static java.util.Calendar.*;
 
+
 @Entity
 @Table(name="users")
+//@NamedQuery(name="getUserByUsername", query="select u from User u where u.username like :uname")
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     Integer user_id;
 
+    @UniqueUsername(message="Username is already taken!")
     @Size(min=6,max=50,message = "The username should have at least 6 and maximum 50 characters!")
     String username;
 
     @Size(min=1, message = "Please type in your name!")
     String full_name;
-
+    
     @MinimumYearsSince(min=18,message = "You must be 18 in order to register!")
     Date birthdate;
 
@@ -34,11 +38,27 @@ public class User {
     SexualOrientation sexualOrientation;
     String bio;
 
+    @UniqueEmail(message = "Email is already registered.")
+    @Email
     @Size(min=1, message = "Please type in your email address!")
     String email;
 
-    @Size(min=4,max=20, message = "The password should have at least 4 and maximum 20 characters!")
+    @Size(min=4,max=60, message = "The password should have at least 4 and maximum 20 characters!")
     String password;
+
+    public User(){}
+    public User(User user) {
+        this.user_id=user.getUser_id();
+        this.username=user.getUsername();
+        this.full_name=user.getFull_name();
+        this.birthdate=user.getBirthdate();
+        this.sex=user.getSex();
+        this.sexualOrientation=user.getSexualOrientation();
+        this.bio=user.getBio();
+        this.email=user.getEmail();
+        this.password=user.getPassword();
+
+    }
 
 
     public String getPassword() {

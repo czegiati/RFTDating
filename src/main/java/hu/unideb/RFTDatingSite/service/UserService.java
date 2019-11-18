@@ -11,5 +11,9 @@ public interface UserService {
     List<User> getAllUsers();
     User getUserById(int id);
     void deleteUser(int id);
+    boolean isUsername(String username);
+    boolean isEmail(String email);
+
+    boolean correctLogIn(String username,String password);
 
 }
