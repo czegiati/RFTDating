@@ -12,7 +12,7 @@ export class AppComponent {
 
   public users: User[];
   constructor(userservice: UserService) {
-    userservice.findAll().then((result) => {
+    userservice.findAll().then((result: User[]) => {
       console.log(result);
       this.users = result;
     });

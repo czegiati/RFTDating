@@ -6,6 +6,7 @@ import { Sex } from '../models/sex';
 import { Orientation } from '../models/orientation';
 import { RegisterCredentials } from '../models/register-credentials.model';
 import { exhaustMap } from 'rxjs/operators';
+import { of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,18 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  public login(username: string, password: string) {
-    return this.http.post<User>(ROOT_URL + '/users', {username, password}).toPromise();
+  public login(username: string, password: string): Promise<boolean> {
+    //return this.http.post<boolean>(ROOT_URL + '/login', {username, password})
+    of(true)
+    .toPromise()
+      .then((isLoggedIn: boolean) => {
+        console.log('Successful Login');
+        return isLoggedIn;
+      })
+      .catch(() => {
+        console.log('Unsuccessful login');
+        return false;
+      });
   }
 
   public register(credentials: RegisterCredentials): Promise<User> {
