@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmail(String email) {
         User u=userRepository.getUsersByEmail(email);
-        System.out.println(u);
+
         if(email.equals("") ) return false;
         if(u!=null) return true;
         return false;
@@ -112,9 +112,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean correctLogIn(String username, String password) {
         User u=userRepository.getUsersByUsername(username);
-        System.out.println(u.getPassword()+" "+password);
-        if(passwordEncoder.matches(password,u.getPassword())) return true;
-        else return false;
+        if(u!=null){
+        if(passwordEncoder.matches(password,u.getPassword())) return true;}
+         return false;
     }
 
     @Override
@@ -138,7 +138,6 @@ public class UserServiceImpl implements UserService {
         List<User> agelist= getUsersInAgeRange(min,max);
             switch (user.getSexualOrientation()){
                 case bisexual:
-                    System.out.println("bisexual user detected");
                     if(user.getSex().equals(Sex.male)) //male user
                     {   //bi and homo males
                         users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.male) &&
@@ -162,7 +161,6 @@ public class UserServiceImpl implements UserService {
                     }
                     break;
                 case homosexual:
-                    System.out.println("Fag detected");
                     if(user.getSex().equals(Sex.male))
                     {
                         users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.male) &&
@@ -177,7 +175,6 @@ public class UserServiceImpl implements UserService {
                     }
                     break;
                 case heterosexual:
-                    System.out.println("Hetero detected");
                     if(user.getSex().equals(Sex.male))
                     {
                         users.addAll(agelist.stream().filter(o -> o.getSex().equals(Sex.female) &&

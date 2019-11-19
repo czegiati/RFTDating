@@ -27,7 +27,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class LoginController
@@ -47,22 +49,33 @@ public class LoginController
         }
     }
 
+    public Map<String,String> getUsernameAndPassw(String data){
+        String username=data.substring(0,data.indexOf('&'));
+        String password=data.substring(data.indexOf('&')+1);
+        username=username.substring(username.indexOf('=')+1);
+        password=password.substring(password.indexOf('=')+1);
+        Map<String,String> map=new HashMap<>();
+        map.put("username",username);
+        map.put("password",password);
+        return map;
+    }
+
     @PostMapping("/login")
-    public String postlogin(Model model, HttpServletRequest req, @ModelAttribute("login") UserLoginForm form){
-        String username=form.getUsername();
-        String passw=form.getPassword();
-        System.out.println(username+" "+passw);
-        if(userService.correctLogIn(username,passw))
-        {
+    public String postlogin(Model model, HttpServletRequest req, @RequestBody String data){
+        //RequestBody returns: paramname=paramvalue&paramname2=paramvalue2...
+        String username=getUsernameAndPassw(data).get("username");
+        String password=getUsernameAndPassw(data).get("password");
+        if(userService.correctLogIn(username,password)) {
             try {
-                req.login(username,passw);
+                req.login(username, password);
             } catch (ServletException e) {
                 e.printStackTrace();
             }
             return "redirect:/logedin";
         }
-        return "login";
+        return "redirect:/login?error";
     }
+
 
   @RequestMapping("/logedin")
    public String logedin(Model model){
@@ -122,7 +135,6 @@ public class LoginController
       opw.setUsername(user.getUsername());
       opw.setSo(user.getSexualOrientation());
       model.addAttribute("user",opw);
-      System.out.println("OPW: "+opw);
         return "othersprofileview";
   }
 

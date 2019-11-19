@@ -12,8 +12,8 @@
    You have been logged out.
 </div>
 <form th:action="@{/login}" method="post" th:object="${login}">
-   <div><label> User Name : <input type="text" name="username" th:field="*{username}"/> </label></div>
-   <div><label> Password: <input type="password" name="password" th:field="*{password}"/> </label></div>
+   <div><label> User Name : <input type="text" name="username" th:field="*{username}" th:value="username"/> </label></div>
+   <div><label> Password: <input type="password" name="password" th:field="*{password}" th:value="password"/> </label></div>
    <div><input type="submit" value="Sign In"/></div>
 </form>
 </body>
