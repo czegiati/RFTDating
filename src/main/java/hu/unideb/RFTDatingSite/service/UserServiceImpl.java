@@ -112,7 +112,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean correctLogIn(String username, String password) {
         User u=userRepository.getUsersByUsername(username);
-        if(u.getPassword().equals(passwordEncoder.encode(password))) return true;
+        System.out.println(u.getPassword()+" "+password);
+        if(passwordEncoder.matches(password,u.getPassword())) return true;
         else return false;
     }
 

@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.soap.SOAPBinding;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +36,32 @@ public class LoginController
     UserService userService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             return "redirect:/logedin";
         } else {
+            UserLoginForm form=new UserLoginForm();
+            model.addAttribute("login",form);
             return "login";
         }
+    }
+
+    @PostMapping("/login")
+    public String postlogin(Model model, HttpServletRequest req, @ModelAttribute("login") UserLoginForm form){
+        String username=form.getUsername();
+        String passw=form.getPassword();
+        System.out.println(username+" "+passw);
+        if(userService.correctLogIn(username,passw))
+        {
+            try {
+                req.login(username,passw);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
+            return "redirect:/logedin";
+        }
+        return "login";
     }
 
   @RequestMapping("/logedin")

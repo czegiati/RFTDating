@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -22,24 +23,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/home","/register").permitAll() //anyone can access these
                 .anyRequest().authenticated() //only authorized users can access these (in this case logged in users)
-                .and()
+                /*.and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/login").loginProcessingUrl("/login")
                 .defaultSuccessUrl("/logedin",true)
-                .permitAll()
+                .permitAll()*/
                 .and()
-                .logout()
-                .permitAll();
+                .logout().logoutUrl("/logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login").permitAll()
+                .deleteCookies("JSESSIONID").invalidateHttpSession(true).and()
+                .exceptionHandling().and().cors().and().csrf().disable();
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailService();
     }
-   /* @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new PasswordEnconderTest();
-    }*/
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -58,15 +58,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    public class PasswordEnconderTest implements PasswordEncoder {
-        @Override
-        public String encode(CharSequence charSequence) {
-            return charSequence.toString();
-        }
-
-        @Override
-        public boolean matches(CharSequence charSequence, String s) {
-            return charSequence.toString().equals(s);
-        }
-    }
 }
