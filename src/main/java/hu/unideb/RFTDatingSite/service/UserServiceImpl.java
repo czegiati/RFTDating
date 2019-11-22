@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
             userUpdate.setSex(user.getSex());
             userUpdate.setSexualOrientation(user.getSexualOrientation());
             userUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+            userUpdate.setImage(user.getImage());
             return userUpdate;
         } else {
             throw new ResourceNotFoundException("Record not found; ID:"+user.getUser_id());

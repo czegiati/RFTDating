@@ -3,15 +3,20 @@ package hu.unideb.RFTDatingSite.Model;
 import hu.unideb.RFTDatingSite.Model.validation.MinimumYearsSince;
 import hu.unideb.RFTDatingSite.Model.validation.UniqueEmail;
 import hu.unideb.RFTDatingSite.Model.validation.UniqueUsername;
+import org.apache.commons.io.FileUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
 import javax.validation.Constraint;
 import javax.validation.constraints.*;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Locale;
+
 
 import static java.util.Calendar.*;
 
@@ -46,8 +51,13 @@ public class User {
     @Size(min=4,max=60, message = "The password should have at least 4 and maximum 20 characters!")
     String password;
 
-    public User(){}
-    public User(User user) {
+    byte[] image=SetDefaultImage();
+
+    @Transient
+    String Picture;
+
+    public User() throws IOException {}
+    public User(User user) throws IOException {
         this.user_id=user.getUser_id();
         this.username=user.getUsername();
         this.full_name=user.getFull_name();
@@ -57,9 +67,26 @@ public class User {
         this.bio=user.getBio();
         this.email=user.getEmail();
         this.password=user.getPassword();
+        this.image=user.getImage();
+        this.Picture = Base64.getEncoder().encodeToString(image);
 
     }
 
+
+    private byte[] SetDefaultImage() throws IOException {
+        File file = new File(getClass().getResource("/Pictures/NAN.jpg").getFile());
+        this.image = FileUtils.readFileToByteArray(file);
+
+        return image;
+    }
+
+    public String getPicture(){ return this.Picture; }
+
+    public void setPicture(String picture){this.Picture = picture;}
+
+    public byte[] getImage() { return image; }
+
+    public void setImage(byte[] image) { this.image = image; }
 
     public String getPassword() {
         return password;

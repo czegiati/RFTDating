@@ -135,6 +135,8 @@ public class LoginController
       opw.setSex(user.getSex());
       opw.setUsername(user.getUsername());
       opw.setSo(user.getSexualOrientation());
+      opw.setImage(user.getImage());
+      opw.setPicture(user.getPicture());
       model.addAttribute("user",opw);
         return "othersprofileview";
   }

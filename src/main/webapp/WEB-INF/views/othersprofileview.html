@@ -26,6 +26,10 @@
          <td><label name="bio">Bio </label></td>
          <td><p th:text="${user.bio}"></p></td>
       </tr>
+      <tr>
+         <td><label name="image">Image: </label></td>
+         <td><img  style="height:200px;width:125px;" th:src="@{'data:image/png;base64,'+ ${user.Picture}}" /></td>
+      </tr>
    </table>
    </body>
 </html>
