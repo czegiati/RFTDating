@@ -51,6 +51,7 @@ public class User {
     @Size(min=4,max=60, message = "The password should have at least 4 and maximum 20 characters!")
     String password;
 
+    @Column(length = 4194304)
     byte[] image=SetDefaultImage();
 
     @Transient
