@@ -29,31 +29,9 @@
 
 <footer>This project is available at <a href="https://github.com/czegiati/RFTDating">GitHub</a>.</footer>-->
 <header>
-<mat-sidenav-container>
-  <mat-sidenav  #sidenav role="navigation">
-    <mat-nav-list>
-      <a mat-list-item [routerLink]="'/register'">
-        <mat-icon class="icon">person_add</mat-icon>
-        <span class="label">Register</span>
-      </a>
-      <a mat-list-item [routerLink]="'/home'">
-        <mat-icon class="icon">home</mat-icon>
-        <span class="label">Home</span>
-      </a>
-      <a mat-list-item [routerLink]="'/view-profile'">
-        <mat-icon class="icon">person</mat-icon>
-        <span class="label">Profile</span>
-      </a>
-      <a  mat-list-item type="button">
-        <mat-icon class="icon">input</mat-icon>
-        <span class="label">LogOut</span>
-      </a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
     <mat-toolbar color="primary">
       <div>
-        <a>
+        <a (click)="onHomeClicked()">
           B Mine Dating app
           <mat-icon class="icon" >favorite</mat-icon>
         </a>
@@ -61,37 +39,39 @@
       <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
           <li>
-            <a [routerLink]="'/register'">
-              <mat-icon class="icon">person_add</mat-icon>
-              <span class="label">Register</span>
-            </a>
-          </li>
-          <li>
             <a [routerLink]="'/home'">
               <mat-icon class="icon">home</mat-icon>
               <span class="label">Home</span>
             </a>
           </li>
-          <li>
-            <a [routerLink]="'/view-profile'">
-              <mat-icon class="icon">person</mat-icon>
-              <span class="label">Profile</span>
-            </a>
-          </li>
-          <li>
-            <a>
-              <mat-icon class="icon">input</mat-icon>
-              <span class="label">LogOut</span>
-            </a>
-          </li>
+          <ng-container *ngIf="isLoggedIn">
+            <li>
+              <a [routerLink]="['/view-profile', currentUserId]">
+                <mat-icon class="icon">person</mat-icon>
+                <span class="label">Profile</span>
+              </a>
+            </li>
+            <li>
+              <a>
+                <mat-icon class="icon">input</mat-icon>
+                <span class="label">Log out</span>
+              </a>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="!isLoggedIn">
+            <li *ngIf="!isLoggedIn">
+              <a [routerLink]="'/register'">
+                <mat-icon class="icon">person_add</mat-icon>
+                <span class="label">Register</span>
+              </a>
+            </li>
+          </ng-container>
         </ul>
       </div>
     </mat-toolbar>
-    <main>
-    </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
 </header>
-<body>
-<router-outlet></router-outlet>
-</body>
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>This project is available at <a href="https://github.com/czegiati/RFTDating">GitHub</a>.</footer>

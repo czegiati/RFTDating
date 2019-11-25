@@ -55,15 +55,11 @@ public class LoginController
         //RequestBody returns: paramname=paramvalue&paramname2=paramvalue2...
         String username=getUsernameAndPassw(data).get("username");
         String password=getUsernameAndPassw(data).get("password");
-        if(userService.correctLogIn(username,password)) {
-            try {
-                req.login(username, password);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            }
-            return new ResponseEntity<>("redirect:/logedin", HttpStatus.OK);
+        if (userService.correctLogIn(username,password)) {
+            User user= userService.getUserByUsername(username);
+            return new ResponseEntity<>(user.getUser_id().toString(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("redirect:/login?error", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
 

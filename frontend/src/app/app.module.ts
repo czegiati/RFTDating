@@ -37,7 +37,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     RouterModule.forRoot([
       {path: '', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
-      {path: 'view-profile', component: ViewProfileComponent},
+      {path: 'view-profile/:id', component: ViewProfileComponent },
       {path: 'edit-profile', component: EditProfileComponent},
       {path: 'home', component: HomeComponent}
     ]),

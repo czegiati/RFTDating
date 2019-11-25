@@ -9,11 +9,12 @@
     </mat-card-header>
 
     <mat-card-content></mat-card-content>
-    <mat-card-content>{{ user.birthdate }}</mat-card-content>
+    <mat-card-content>{{ user.birthdate | date }}</mat-card-content>
     <mat-card-content>{{ user.sex }}</mat-card-content>
     <mat-card-content>{{ user.orientation }}</mat-card-content>
     <mat-card-content>{{ user.bio }}</mat-card-content>
     <mat-card-actions>
+      <!-- Add router link to this button -->
       <button>View Profile</button>
     </mat-card-actions>
   </mat-card>

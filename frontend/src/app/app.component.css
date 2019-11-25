@@ -1,18 +1,19 @@
-/*.footer {
-  background-color: #7986c9;
+footer {
   position: absolute;
   text-align: center;
   bottom: 0;
   width: 100%;
-  height: 20px;
-}
+  min-height: 20px;
 
+  background-color: #b1afb6;
+  border-top: 1px solid #9A96A6;
+  font-size: 0.8rem;
+  padding: 0.2rem;
+}
+/*
 .spacer {
   flex: 1 1 auto;
 }*/
-body {
-  background-color: lavender;
-}
 
 mat-sidenav-container, mat-sidenav-content, mat-sidenav {
   height: 100%;

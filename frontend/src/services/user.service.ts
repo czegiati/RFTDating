@@ -13,11 +13,23 @@ export class UserService {
   public  list: User[] = [];
 
   public findAll(): Promise<User[]> {
+    // @todo cache this call
     return this.http.get<User[]>(ROOT_URL + '/users').toPromise().then(users => users.map(this.getUser));
   }
 
-  public getUser( serverUserObject: any) {
+  public findAllObservable(): Observable<User[]> {
+    return this.http.get<User[]>(ROOT_URL + '/users');
+  }
+
+  public getUserById(userId: string): Promise<User> {
+    return this.findAll().then(users => {
+      return users.find((user: User) => user.id === userId);
+    });
+  }
+
+  private getUser( serverUserObject: any) {
     return {
+      id: serverUserObject.user_id + '',
       username: serverUserObject.username,
       email: serverUserObject.email,
       fullname: serverUserObject.full_name,
@@ -26,10 +38,6 @@ export class UserService {
       orientation: serverUserObject.sexualOrientation,
       bio: serverUserObject.bio
     };
-  }
-
-  public findAllObservable(): Observable<User[]>{
-    return this.http.get<User[]>(ROOT_URL + '/users');
   }
 
 
