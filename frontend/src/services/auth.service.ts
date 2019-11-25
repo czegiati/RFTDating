@@ -1,28 +1,23 @@
-import { Injectable } from '@angular/core';
-import { User } from '../models/user';
-import { ROOT_URL } from './service.constants';
-import { HttpClient } from '@angular/common/http';
-import { Sex } from '../models/sex';
-import { Orientation } from '../models/orientation';
-import { RegisterCredentials } from '../models/register-credentials.model';
-import { exhaustMap } from 'rxjs/operators';
-import { of} from "rxjs";
+import {Injectable} from '@angular/core';
+import {User} from '../models/user';
+import {ROOT_URL} from './service.constants';
+import {HttpClient} from '@angular/common/http';
+import {RegisterCredentials} from '../models/register-credentials.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   public login(username: string, password: string): Promise<boolean> {
-    //return this.http.post<boolean>(ROOT_URL + '/login', {username, password})
-    return of(true)
-    .toPromise()
-      .then((isLoggedIn: boolean) => {
+    return this.http.post<boolean>(ROOT_URL + '/login',
+      `username=${username}&password=${password}`)
+      .toPromise()
+      .then(() => {
         console.log('Successful Login');
-        return isLoggedIn;
+        return true;
       })
       .catch(() => {
         console.log('Unsuccessful login');

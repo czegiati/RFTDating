@@ -3,37 +3,25 @@ package hu.unideb.RFTDatingSite.controller;
 import hu.unideb.RFTDatingSite.Model.DateFunctions;
 import hu.unideb.RFTDatingSite.Model.User;
 import hu.unideb.RFTDatingSite.Model.forms.*;
-import hu.unideb.RFTDatingSite.Model.validation.LoginValidation;
-import hu.unideb.RFTDatingSite.repository.UserRepository;
 import hu.unideb.RFTDatingSite.service.UserService;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 public class LoginController
 {
     @Autowired
@@ -63,7 +51,7 @@ public class LoginController
     }
 
     @PostMapping("/login")
-    public String postlogin(Model model, HttpServletRequest req, @RequestBody String data){
+    public ResponseEntity<String> postlogin(Model model, HttpServletRequest req, @RequestBody String data){
         //RequestBody returns: paramname=paramvalue&paramname2=paramvalue2...
         String username=getUsernameAndPassw(data).get("username");
         String password=getUsernameAndPassw(data).get("password");
@@ -73,9 +61,9 @@ public class LoginController
             } catch (ServletException e) {
                 e.printStackTrace();
             }
-            return "redirect:/logedin";
+            return new ResponseEntity<>("redirect:/logedin", HttpStatus.OK);
         }
-        return "redirect:/login?error";
+        return new ResponseEntity<>("redirect:/login?error", HttpStatus.UNAUTHORIZED);
     }
 
 
