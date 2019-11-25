@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
+   <head>
+      <link href = "css/styles.css" rel = "stylesheet"/>
+      <title>Dating Site Registration</title>
+   </head>
+   <body>
+   <h3>This is a Profile of another User</h3>
+   <table>
+      <tr>
+         <td><label name="username">Username: </label></td>
+         <td><p th:text="${user.username}"></p></td>
+      </tr>
+      <tr>
+         <td><label name="age">Age: </label></td>
+         <td><p th:text="${user.age}"></p></td>
+      </tr>
+      <tr>
+         <td><label name="sex">Sex: </label></td>
+         <td><p th:text="${user.sex}"></p></td>
+      </tr>
+      <tr>
+         <td><label name="so">Sexual Orientation: </label></td>
+         <td><p th:text="${user.so}"></p></td>
+      </tr>
+      <tr>
+         <td><label name="bio">Bio </label></td>
+         <td><p th:text="${user.bio}"></p></td>
+      </tr>
+      <tr>
+         <td><label name="image">Image: </label></td>
+         <td><img  style="height:200px;width:125px;" th:src="@{'data:image/png;base64,'+ ${user.Picture}}" /></td>
+      </tr>
+   </table>
+   </body>
+</html>

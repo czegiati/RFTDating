@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class MyController {
 
 
     @GetMapping("/register")
-    public String register(Model model){
+    public String register(Model model) throws IOException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(principal instanceof UserDetails)) {
             model.addAttribute("User",new User());
