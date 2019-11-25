@@ -1,0 +1,16 @@
+<mat-card *ngIf="user">
+  <mat-card-title>Profile Details:</mat-card-title>
+  <mat-card-content>Full Name: {{ user.fullname }}</mat-card-content>
+  <mat-card-content>Username: {{ user.username }}</mat-card-content>
+  <mat-card-content>Email: {{ user.email }}</mat-card-content>
+  <mat-card-content>Date of Birth: {{ user.birthdate | date }}</mat-card-content>
+  <mat-card-content>Gender: {{ user.sex }}</mat-card-content>
+  <mat-card-content>Sexual Orientation: {{ user.orientation }}</mat-card-content>
+  <mat-card-content>Bio: {{ user.bio }}</mat-card-content>
+  <img mat-card-lg-image
+       src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"/>
+  <mat-card-actions>
+    <button>Edit Profile</button>
+  </mat-card-actions>
+
+</mat-card>

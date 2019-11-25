@@ -18,7 +18,7 @@ export class AuthService {
 
   public login(username: string, password: string): Promise<boolean> {
     //return this.http.post<boolean>(ROOT_URL + '/login', {username, password})
-    of(true)
+    return of(true)
     .toPromise()
       .then((isLoggedIn: boolean) => {
         console.log('Successful Login');

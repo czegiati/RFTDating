@@ -1,0 +1,11 @@
+h2, form {
+  display: inline-block;
+  text-align:center;
+  line-height: 30px;
+  margin: 5px;
+  width: 100%;
+}
+
+label {
+  padding-right: 10px;
+}

@@ -1,0 +1,22 @@
+<h3>Existing users:</h3>
+
+<div *ngFor="let user of users">
+  <mat-card >
+    <mat-card-header>
+      <mat-card-title>{{ user.fullname }}</mat-card-title>
+      <mat-card-subtitle>{{ user.username }}</mat-card-subtitle>
+      <img mat-card-avatar src="https://www.europe-together.eu/wp-content/themes/sd/images/user-placeholder.svg">
+    </mat-card-header>
+
+    <mat-card-content></mat-card-content>
+    <mat-card-content>{{ user.birthdate }}</mat-card-content>
+    <mat-card-content>{{ user.sex }}</mat-card-content>
+    <mat-card-content>{{ user.orientation }}</mat-card-content>
+    <mat-card-content>{{ user.bio }}</mat-card-content>
+    <mat-card-actions>
+      <button>View Profile</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+

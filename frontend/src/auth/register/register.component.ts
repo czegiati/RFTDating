@@ -23,12 +23,13 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(6)] ],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
       fullname: ['', Validators.required],
       birthdate: ['', Validators.required],
       sex: ['', Validators.required],
       orientation: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      bio: ['', Validators.required],
     });
   }
   public onSubmit() {

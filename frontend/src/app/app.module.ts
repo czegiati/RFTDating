@@ -11,22 +11,37 @@ import { RegisterComponent } from '../auth/register/register.component';
 import { AuthService } from '../services/auth.service';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { ViewProfileComponent } from './view-profile/view-profile.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import {MatCardModule} from '@angular/material/card';
+import { HomeComponent } from './home/home.component';
+import {MaterialModule} from './material.module';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ViewProfileComponent,
+    EditProfileComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MaterialModule,
+    FlexLayoutModule,
     HttpClientModule,
     AuthModule,
     MatToolbarModule,
     MatIconModule,
     RouterModule.forRoot([
-      { path: '', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
-    ])
+      {path: '', component: LoginComponent},
+      {path: 'register', component: RegisterComponent},
+      {path: 'view-profile', component: ViewProfileComponent},
+      {path: 'edit-profile', component: EditProfileComponent},
+      {path: 'home', component: HomeComponent}
+    ]),
+    MatCardModule,
   ],
   providers: [UserService, AuthService],
   bootstrap: [AppComponent]

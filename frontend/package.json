@@ -16,6 +16,7 @@
     "@angular/common": "~8.2.13",
     "@angular/compiler": "~8.2.13",
     "@angular/core": "~8.2.13",
+    "@angular/flex-layout": "^5.0.0-beta.14",
     "@angular/forms": "~8.2.13",
     "@angular/material": "^8.2.3",
     "@angular/platform-browser": "~8.2.13",
@@ -23,6 +24,7 @@
     "@angular/router": "~8.2.13",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.4.0",
+    "rxjs-compat": "^6.5.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },

@@ -1,0 +1,21 @@
+h3 {
+  display: inline-block;
+  vertical-align: top;
+}
+
+mat-card {
+  display: inline-block;
+  min-height: 270px;
+  min-width: 225px;
+  horiz-align: left;
+  vertical-align: top;
+
+}
+
+div {
+  padding: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  horiz-align: center;
+}
+
