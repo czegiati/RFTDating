@@ -67,6 +67,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updateUserWithoutEncryption(User user) {
+        Optional<User> userDb= this.userRepository.findById(user.getUser_id());
+
+        if(userDb.isPresent()){
+            User userUpdate= userDb.get();
+
+            userUpdate.setUser_id(user.getUser_id());
+            userUpdate.setUsername(user.getUsername());
+            userUpdate.setBio(user.getBio());
+            userUpdate.setBirthdate(user.getBirthdate());
+            userUpdate.setEmail(user.getEmail());
+            userUpdate.setFull_name(user.getFull_name());
+            userUpdate.setSex(user.getSex());
+            userUpdate.setSexualOrientation(user.getSexualOrientation());
+            userUpdate.setPassword(user.getPassword());
+            userUpdate.setImage(user.getImage());
+            return userUpdate;
+        } else {
+            throw new ResourceNotFoundException("Record not found; ID:"+user.getUser_id());
+        }
+    }
+    @Override
     public List<User> getAllUsers() {
         return (List<User>) this.userRepository.findAll();
     }

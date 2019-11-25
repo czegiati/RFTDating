@@ -1,0 +1,99 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
+   <head>
+      <link href = "css/styles.css" rel = "stylesheet"/>
+      <title>Dating Site Registration</title>
+   </head>
+   <body>
+   <h3>Your profile</h3>
+   <table>
+
+      <tr>
+         <td><label name="username">Username: </label></td>
+         <td><p type="text" th:text="${myuser.username}"><p/></td>
+      </tr>
+
+      <tr>
+         <td><label name="password">Password: </label></td>
+         <form th:action="@{/logedin/profile(type=password)}" method="post">
+            <td>
+               <input type="password" th:text="null" th:field="*{myuser.password}">
+               <p style="display:inline-block;">   Password again:</p>
+               <input type="password" th:text="null" th:field="*{myuser.bio}">
+            </td>
+            <td><input type="submit" value="Change"></td>
+         </form>
+      </tr>
+
+      <tr>
+         <td><label name="email">Email address: </label></td>
+         <form th:action="@{/logedin/profile(type=email)}" method="post">
+         <td><input type="text" th:field="*{myuser.email}"></td>
+            <td><input type="submit" value="Change"><p th:if="${errorM}" th:value="${errorM}"></p></td>
+         </form>
+      </tr>
+
+      <tr>
+         <td><label name="full_name">Name: </label></td>
+         <form th:action="@{/logedin/profile(type=name)}" method="post">
+         <td><input type="text" th:field="*{myuser.full_name}"></td>
+            <td><input type="submit" value="Change"></td>
+         </form>
+      </tr>
+
+      <tr>
+      <td><label name="sex">Sex: </label></td>
+      <form th:action="@{/logedin/profile(type=sex)}" method="post">
+         <td>
+            <select th:field="*{myuser.sex}">
+               <option th:each="sex1:${sexList}" th:text="${sex1}" th:value="${sex1}" th:selected="${sex1==myuser.sex}"/>
+            </select>
+         </td>
+         <td><input type="submit" value="Change"> </td>
+      </form>
+   </tr>
+
+      <tr>
+         <td><label name="sexual_orientation">Sexual Orientation: </label></td>
+         <form th:action="@{/logedin/profile(type=sexualOrientation)}" method="post">
+         <td>
+            <select th:field="*{myuser.sexualOrientation}">
+               <option th:each="sexo1:${sexoList}" th:text="${sexo1}" th:value="${sexo1}" th:selected="${sexo1==myuser.sexualOrientation}"/>
+            </select>
+         </td>
+         <td>
+            <input type="submit" value="Change">
+         </td>
+         </form>
+      </tr>
+
+      <tr>
+         <td><label name="Bdate">Birthdate: </label></td>
+         <form th:action="@{/logedin/profile(type=birthdate)}" method="post">
+         <td><input type="date" th:value="${myuser.birthdate}" th:field="*{myuser.birthdate}" required></td>
+            <td><input type="submit" value="Change"></td>
+         </form>
+      </tr>
+
+      <form action="#" th:action="@{/logedin/profile(type=bio)}" method="post">
+         <tr>
+            <td><label name="bio">Bio </label></td>
+            <td><textarea th:field="*{myuser.bio}" th:text="${myuser.bio}" style="width:600px;height:250px;resize:none;"></textarea></td>
+            <td><input type="submit" value="Change"></td>
+         </tr>
+      </form>
+
+      <tr>
+         <td><p>Picture: </p><img  style="height:200px;width:125px;" th:src="@{'data:image/png;base64,'+ ${myuser.Image}}" /></td>
+         <form th:action="@{/logedin/profile(type=picture)}" method="POST" enctype="multipart/form-data">
+         <td>
+            <input type="file" name="file" >
+         </td>
+         <td>
+            <input type="submit" value="Upload" >
+         </td>
+         </form>
+      </tr>
+
+   </table>
+   </body>
+</html>

@@ -6,6 +6,7 @@ import hu.unideb.RFTDatingSite.Model.forms.*;
 import hu.unideb.RFTDatingSite.Model.validation.LoginValidation;
 import hu.unideb.RFTDatingSite.repository.UserRepository;
 import hu.unideb.RFTDatingSite.service.UserService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
@@ -26,11 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class LoginController
@@ -139,6 +140,73 @@ public class LoginController
       opw.setPicture(user.getPicture());
       model.addAttribute("user",opw);
         return "othersprofileview";
+  }
+
+  @GetMapping("/logedin/profile")
+  public String viewMyProfile(Model model){
+        User u=userService.getUserByUsername(((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        model.addAttribute("myuser",u);
+        MyController.setRegistrationModel(model);
+        model.addAttribute("myfile",new String());
+        return "myprofileview";
+  }
+
+  @PostMapping("/logedin/profile")
+    public String postView(Model model
+          , @ModelAttribute("myuser")User user
+          , @RequestParam("type")String param
+          , @RequestParam(value = "file",required = false) MultipartFile file
+          , @ModelAttribute("errorM")String errorM) throws IOException {
+      User u=userService.getUserByUsername(((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+      switch (param) {
+          case "bio":
+              u.setBio(user.getBio());
+              userService.updateUserWithoutEncryption(u);
+              break;
+          case "birthdate":
+              if(!u.getBirthdate().equals(user.getBirthdate())) {
+                  u.setBirthdate(new java.sql.Date(new Date(user.getBirthdate().getTime()+(1000 * 60 * 60 * 24)).getTime()));
+                  userService.updateUserWithoutEncryption(u);
+              }
+              break;
+          case "password":
+              System.out.println(user.getBio()+"   "+user.getPassword());
+              if(user.getBio().equals(user.getPassword())) {
+                  u.setPassword(user.getPassword());
+                  userService.updateUser(u);
+              }else {
+                  model.addAttribute("myuser",u);
+                  MyController.setRegistrationModel(model);
+                  return "myprofileview";
+              }
+              break;
+          case "picture":
+              u.setPicture(Base64.getEncoder().encodeToString(file.getBytes()));
+              u.setImage(file.getBytes());
+              userService.updateUserWithoutEncryption(u);
+              break;
+          case "sex":
+              u.setSex(user.getSex());
+              userService.updateUserWithoutEncryption(u);
+              break;
+          case "name":
+              u.setFull_name(user.getFull_name());
+              userService.updateUserWithoutEncryption(u);
+              break;
+          case "email":
+              if(userService.isEmail(user.getEmail()))
+              {
+                  model.addAttribute("myuser",u);
+                  MyController.setRegistrationModel(model);
+                  return "myprofileview";
+              }
+              break;
+          case "sexualOrientation":
+              u.setSexualOrientation(user.getSexualOrientation());
+              userService.updateUserWithoutEncryption(u);
+              break;
+      }
+      return "redirect:/logedin";
   }
 
 }

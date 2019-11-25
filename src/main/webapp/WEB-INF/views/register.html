@@ -20,7 +20,7 @@
       </tr>
       <tr>
          <td><label name="birthdate">Birth date: </label></td>
-         <td><input type="date" th:field="*{birthdate}"  value="2010-10-10" title="You must be 18 or older, in order to use this site!"></td>
+         <td><input type="date" th:field="*{birthdate}"  value="2010-10-10" title="You must be 18 or older, in order to use this site!" required></td>
          <td><p th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">Incorrect username</p></td>
       </tr>
       <tr>
