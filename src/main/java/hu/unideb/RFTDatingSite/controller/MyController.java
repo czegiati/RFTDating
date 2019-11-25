@@ -63,7 +63,7 @@ public class MyController {
     }
 
 
-    private void setRegistrationModel(Model model){
+    static void setRegistrationModel(Model model){
         List<Sex> sexList=new ArrayList<>();
         for(Sex x: Sex.values())
         {
