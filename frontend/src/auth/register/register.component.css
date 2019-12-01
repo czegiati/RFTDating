@@ -9,3 +9,38 @@ h2, form {
 label {
   padding-right: 10px;
 }
+
+.alert {
+  color: crimson;
+}
+
+form {
+}
+
+.form-group {
+  display: flex;
+  justify-content: flex-end;
+  padding: .5em;
+  max-width: 600px;
+}
+
+.form-group > label {
+  padding: .5em 1em .5em 0;
+  justify-content: flex-start;
+  flex: 1;
+  max-width: 200px;
+}
+
+.form-group > input {
+  flex: 2;
+}
+
+.form-group > input,
+.form-group > button {
+  padding: .5em;
+}
+.form-group > button {
+  background: gray;
+  color: white;
+  border: 0;
+}

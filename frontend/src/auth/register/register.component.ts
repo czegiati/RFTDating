@@ -40,4 +40,14 @@ export class RegisterComponent implements OnInit {
     console.log(this.registerForm.value);
     this.authService.register(this.registerForm.value);
   }
+
+  get username() { return this.registerForm.get('username'); }
+  get email() { return this.registerForm.get('email'); }
+  get password() { return this.registerForm.get('password'); }
+  get fullname() { return this.registerForm.get('fullname'); }
+  get birthdate() { return this.registerForm.get('birthdate'); }
+  get sex() { return this.registerForm.get('sex'); }
+  get orientation() { return this.registerForm.get('orientation'); }
+  get bio() { return this.registerForm.get('bio'); }
+
 }
