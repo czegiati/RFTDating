@@ -1,10 +1,8 @@
 package hu.unideb.RFTDatingSite.service;
 
-import hu.unideb.RFTDatingSite.Model.DateFunctions;
-import hu.unideb.RFTDatingSite.Model.Sex;
-import hu.unideb.RFTDatingSite.Model.SexualOrientation;
-import hu.unideb.RFTDatingSite.Model.User;
+import hu.unideb.RFTDatingSite.Model.*;
 import hu.unideb.RFTDatingSite.exception.ResourceNotFoundException;
+import hu.unideb.RFTDatingSite.repository.PictureRepository;
 import hu.unideb.RFTDatingSite.repository.UserRepository;
 import org.hibernate.Session;
 import org.hibernate.jpa.internal.PersistenceUnitUtilImpl;
@@ -34,6 +32,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private PictureRepository pictureRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -44,11 +45,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(User user, Picture picture) {
         Optional<User> userDb= this.userRepository.findById(user.getUser_id());
+        Optional<Picture> pictureDb = this.pictureRepository.findById(userDb.get().getUser_id());
 
         if(userDb.isPresent()){
             User userUpdate= userDb.get();
+            Picture pictureUpdate = pictureDb.get();
 
             userUpdate.setUser_id(user.getUser_id());
             userUpdate.setUsername(user.getUsername());
@@ -59,7 +62,8 @@ public class UserServiceImpl implements UserService {
             userUpdate.setSex(user.getSex());
             userUpdate.setSexualOrientation(user.getSexualOrientation());
             userUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
-            userUpdate.setImage(user.getImage());
+            pictureUpdate.setImage(picture.getImage());
+            //userUpdate.setImage(user.getImage());
             return userUpdate;
         } else {
             throw new ResourceNotFoundException("Record not found; ID:"+user.getUser_id());
@@ -67,11 +71,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserWithoutEncryption(User user) {
+    public User updateUserWithoutEncryption(User user, Picture picture) {
         Optional<User> userDb= this.userRepository.findById(user.getUser_id());
+        Optional<Picture> pictureDb =this.pictureRepository.findById(userDb.get().getUser_id());
 
         if(userDb.isPresent()){
             User userUpdate= userDb.get();
+            Picture pictureUpdate= pictureDb.get();
 
             userUpdate.setUser_id(user.getUser_id());
             userUpdate.setUsername(user.getUsername());
@@ -82,7 +88,7 @@ public class UserServiceImpl implements UserService {
             userUpdate.setSex(user.getSex());
             userUpdate.setSexualOrientation(user.getSexualOrientation());
             userUpdate.setPassword(user.getPassword());
-            userUpdate.setImage(user.getImage());
+            pictureUpdate.setImage(picture.getImage());
             return userUpdate;
         } else {
             throw new ResourceNotFoundException("Record not found; ID:"+user.getUser_id());

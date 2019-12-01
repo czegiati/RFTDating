@@ -26,7 +26,6 @@ import static java.util.Calendar.*;
 //@NamedQuery(name="getUserByUsername", query="select u from User u where u.username like :uname")
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     Integer user_id;
 
     @UniqueUsername(message="Username is already taken!")
@@ -51,11 +50,15 @@ public class User {
     @Size(min=4,max=60, message = "The password should have at least 4 and maximum 20 characters!")
     String password;
 
-    @Column(length = 4194304)
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    Picture picture=new Picture();
+
+    /*@Column(length = 4194304)
     byte[] image=SetDefaultImage();
 
     @Transient
-    String Picture;
+    String Picture;*/
 
     public User() throws IOException {}
     public User(User user) throws IOException {
@@ -68,13 +71,13 @@ public class User {
         this.bio=user.getBio();
         this.email=user.getEmail();
         this.password=user.getPassword();
-        this.image=user.getImage();
-        this.Picture = Base64.getEncoder().encodeToString(image);
+       // this.image=user.getImage();
+       // this.Picture = Base64.getEncoder().encodeToString(image);
 
     }
 
 
-    private byte[] SetDefaultImage() throws IOException {
+   /* private byte[] SetDefaultImage() throws IOException {
         File file = new File(getClass().getResource("/Pictures/NAN.jpg").getFile());
         this.image = FileUtils.readFileToByteArray(file);
 
@@ -87,7 +90,7 @@ public class User {
 
     public byte[] getImage() { return image; }
 
-    public void setImage(byte[] image) { this.image = image; }
+    public void setImage(byte[] image) { this.image = image; }*/
 
     public String getPassword() {
         return password;

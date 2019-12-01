@@ -83,7 +83,7 @@
       </form>
 
       <tr>
-         <td><p>Picture: </p><img  style="height:200px;width:125px;" th:src="@{'data:image/png;base64,'+ *{T(org.springframework.util.Base64Utils).encodeToString(myuser.image)}}" /></td>
+         <td><p>Picture: </p><img  style="height:200px;width:125px;" th:src="@{'data:image/png;base64,'+ *{T(org.springframework.util.Base64Utils).encodeToString(myfile)}}" /></td>
          <form th:action="@{/logedin/profile(type=picture)}" method="POST" enctype="multipart/form-data">
          <td>
             <input type="file" name="file" >

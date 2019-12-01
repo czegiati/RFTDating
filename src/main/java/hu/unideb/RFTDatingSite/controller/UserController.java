@@ -1,5 +1,6 @@
 package hu.unideb.RFTDatingSite.controller;
 
+import hu.unideb.RFTDatingSite.Model.Picture;
 import hu.unideb.RFTDatingSite.Model.User;
 import hu.unideb.RFTDatingSite.service.UserService;
 import hu.unideb.RFTDatingSite.service.UserServiceImpl;
@@ -32,9 +33,10 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable int id,@RequestBody User user){
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user, @RequestBody Picture picture){
         user.setUser_id(id);
-        return ResponseEntity.ok().body(this.userService.updateUser(user));
+
+        return ResponseEntity.ok().body(this.userService.updateUser(user,picture));
     }
 
     @DeleteMapping("/users/{id}")
