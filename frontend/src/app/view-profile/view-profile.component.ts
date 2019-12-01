@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-profile',

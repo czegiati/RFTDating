@@ -1,0 +1,9 @@
+<div>
+  <input #chatinput type="text">
+  <button (click)="onSend(chatinput.value)">Send</button>
+
+  <ul>
+    <li *ngFor="let message of chatMessages">{{message}}</li>
+  </ul>
+</div>
+

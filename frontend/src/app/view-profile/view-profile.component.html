@@ -10,7 +10,7 @@
   <img mat-card-lg-image
        src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"/>
   <mat-card-actions>
-    <button>Edit Profile</button>
+    <button [routerLink]="['/view-profile']">Edit Profile</button>
   </mat-card-actions>
 </mat-card>
 <span *ngIf="!user">Loading...</span>

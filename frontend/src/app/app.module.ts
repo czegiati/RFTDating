@@ -16,7 +16,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import {MatCardModule} from '@angular/material/card';
 import { HomeComponent } from './home/home.component';
 import {MaterialModule} from './material.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +24,12 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     ViewProfileComponent,
     EditProfileComponent,
     HomeComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule,
     HttpClientModule,
     AuthModule,
     MatToolbarModule,
@@ -38,8 +38,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
       {path: '', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'view-profile/:id', component: ViewProfileComponent },
-      {path: 'edit-profile', component: EditProfileComponent},
-      {path: 'home', component: HomeComponent}
+      {path: 'edit-profile/:id', component: EditProfileComponent},
+      {path: 'home', component: HomeComponent},
+      {path: 'chat', component: ChatComponent}
     ]),
     MatCardModule,
   ],

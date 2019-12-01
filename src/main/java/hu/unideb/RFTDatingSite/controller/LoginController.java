@@ -5,6 +5,7 @@ import hu.unideb.RFTDatingSite.Model.User;
 import hu.unideb.RFTDatingSite.Model.forms.*;
 import hu.unideb.RFTDatingSite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
@@ -51,7 +53,7 @@ public class LoginController
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> postlogin(Model model, HttpServletRequest req, @RequestBody String data){
+    public ResponseEntity<String> postlogin(Model model, HttpServletRequest req, HttpServletResponse res, @RequestBody String data){
         //RequestBody returns: paramname=paramvalue&paramname2=paramvalue2...
         String username=getUsernameAndPassw(data).get("username");
         String password=getUsernameAndPassw(data).get("password");
