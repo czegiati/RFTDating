@@ -31,5 +31,9 @@
          <td><img  style="height:200px;width:125px;" th:src="@{'data:image/png;base64,'+ ${user.Picture}}" /></td>
       </tr>
    </table>
+   <form th:action="@{/logedin/chat}" method="post">
+         <button class="button" type="submit" th:name="touser" th:value="${user.username}">Chat</button>
+      </div>
+   </form>
    </body>
 </html>

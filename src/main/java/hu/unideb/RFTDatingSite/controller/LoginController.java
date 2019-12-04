@@ -217,4 +217,17 @@ public class LoginController
       return "redirect:/logedin";
   }
 
+
+    @PostMapping("/logedin/chat")
+    String forwardToChat(@RequestParam("touser") String toUser){
+        User u=userService.getUserByUsername(((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        return "redirect:/chat?fromuser="+u.getUsername()+"&touser="+toUser;
+    }
+
+    @GetMapping("/chat")
+    String chat(@RequestParam("fromuser")String fromUser,@RequestParam("touser")String toUser){
+        //registry.addViewController("/chat").setViewName("index");
+        return "index";
+    }
+
 }
