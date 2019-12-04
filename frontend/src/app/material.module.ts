@@ -1,20 +1,24 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
-  MatSidenavModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatListModule,
-} from '@angular/material';
-
-@NgModule({
-  imports: [MatSidenavModule,
+    MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-  ],
-  exports: [MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,]
+  MatInputModule,
+  MatInput,
+} from '@angular/material';
+import { CookieService } from 'ngx-cookie-service';
+
+@NgModule({
+    imports: [MatSidenavModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule,
+        MatInputModule
+    ],
+    exports: [
+        MatInput
+    ]
 })
-export class MaterialModule {}
+export class MaterialModule {
+}

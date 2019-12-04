@@ -6,24 +6,16 @@ import hu.unideb.RFTDatingSite.Model.SexualOrientation;
 import hu.unideb.RFTDatingSite.Model.User;
 import hu.unideb.RFTDatingSite.exception.ResourceNotFoundException;
 import hu.unideb.RFTDatingSite.repository.UserRepository;
-import org.hibernate.Session;
-import org.hibernate.jpa.internal.PersistenceUnitUtilImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -135,8 +127,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean correctLogIn(String username, String password) {
         User u=userRepository.getUsersByUsername(username);
-        if(u!=null){
-        if(passwordEncoder.matches(password,u.getPassword())) return true;}
+
+        if (u!=null) {
+            if (passwordEncoder.matches(password, u.getPassword())) return true;
+        }
          return false;
     }
 

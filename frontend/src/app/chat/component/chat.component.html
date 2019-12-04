@@ -1,0 +1,13 @@
+<div>
+  <form>
+    <input #chatinput type="text">
+    <button type="submit" (click)="onSend(chatinput.value, $event)">Send</button>
+  </form>
+
+  <div class="message-container">
+    <p *ngFor="let message of coolChatMessages" [class]="getCssClassByType(message.type) + '  message'">
+      {{message.message}}
+    </p>
+  </div>
+</div>
+

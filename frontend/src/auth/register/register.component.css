@@ -2,10 +2,54 @@ h2, form {
   display: inline-block;
   text-align:center;
   line-height: 30px;
-  margin: 5px;
+  margin: 0 auto;
   width: 100%;
 }
 
 label {
   padding-right: 10px;
+}
+
+.alert {
+  color: crimson;
+}
+
+.form-group {
+  display: flex;
+  justify-content: flex-start;
+  padding: .5em;
+  max-width: 500px;
+}
+
+.form-group > label {
+  padding: .5em 1em .5em 0;
+  justify-content: flex-start;
+  flex: 1;
+  max-width: 150px;
+  max-height: 20px;
+}
+
+.form-group > input {
+  flex: 2;
+  width: 150px;
+  height: 20px;
+
+}
+
+.form-group > select {
+  flex: 2;
+  width: 150px;
+  height: 35px;
+
+}
+
+.form-group > input,
+.form-group > button {
+  padding: .5em;
+}
+.form-group > button {
+  background: indigo;
+  color: white;
+  border: 0;
+  justify-content: flex-end;
 }

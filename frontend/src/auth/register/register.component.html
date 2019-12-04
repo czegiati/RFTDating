@@ -3,22 +3,58 @@
   <div class="form-group">
     <label for="username">Username</label>
     <input id="username" type="text" formControlName="username" class="form-control">
+    <div *ngIf="username.invalid && (username.dirty || username.touched)"
+         class="alert alert-danger">
+      <div *ngIf="username.errors.required">
+        Username is required.
+      </div>
+      <div *ngIf="username.errors.minLength">
+        Username must be at least 6 characters long.
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <label for="email">Email</label>
     <input id="email" type="email" formControlName="email" class="form-control">
+    <div *ngIf="email.invalid && (email.dirty || email.touched)"
+         class="alert alert-danger">
+      <div *ngIf="email.errors.required">
+        Email is required.
+      </div>
+      <div *ngIf="email.errors.email">
+        Must be a valid email.
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <label for="password">Password</label>
     <input id="password" type="password" formControlName="password" class="form-control">
+    <div *ngIf="password.invalid && (password.dirty || password.touched)"
+         class="alert alert-danger">
+      <div *ngIf="password.errors.required">
+        Password is required.
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <label for="fullname">Full Name</label>
     <input id="fullname" type="text" formControlName="fullname" class="form-control">
+    <div *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)"
+         class="alert alert-danger">
+      <div *ngIf="fullname.errors.required">
+        Full name is required.
+      </div>
+    </div>
   </div>
   <div class="form-group">
-    <label for="birthdate">Birth Date</label>
+    <label for="birthdate">Date of birth</label>
     <input id="birthdate" type="date" formControlName="birthdate" class="form-control">
+    <div *ngIf="birthdate.invalid && (birthdate.dirty || birthdate.touched)"
+         class="alert alert-danger">
+      <div *ngIf="birthdate.errors.required">
+        Date of birth is required.
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <label for="sex">Sex</label>
@@ -26,6 +62,12 @@
       <option value="{{Sex.Female}}">{{Sex.Female}}</option>
       <option value="{{Sex.Male}}">{{Sex.Male}}</option>
     </select>
+    <div *ngIf="sex.invalid && (sex.dirty || sex.touched)"
+         class="alert alert-danger">
+      <div *ngIf="sex.errors.required">
+        Sex is required.
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <label for="orientation">Sexual Orientation</label>
@@ -34,14 +76,26 @@
       <option value="{{Orientation.Homosexual}}">{{Orientation.Homosexual}}</option>
       <option value="{{Orientation.Heterosexual}}">{{Orientation.Heterosexual}}</option>
     </select>
+    <div *ngIf="orientation.invalid && (orientation.dirty || orientation.touched)"
+         class="alert alert-danger">
+      <div *ngIf="orientation.errors.required">
+        Sexual Orientation is required.
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
     <label for="bio">Bio</label>
-    <input id="bio" type="text" formControlName="bio" class="form-control">
+    <input id="bio" type="textarea" formControlName="bio" class="form-control">
+    <div *ngIf="bio.invalid && (bio.dirty || bio.touched)"
+         class="alert alert-danger">
+      <div *ngIf="bio.errors.required">
+        Bio is required.
+      </div>
+    </div>
   </div>
   <div class="form-group">
-    <button class="btn btn-primary">
+    <button [routerLink]="'/'" class="btn btn-primary">
       Register
     </button>
   </div>

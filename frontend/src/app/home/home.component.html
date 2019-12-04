@@ -1,6 +1,8 @@
 <h3>Existing users:</h3>
-
-<div *ngFor="let user of users">
+<br/>
+<div *ngFor="let user of shownUsers">
+  <!-- todo: make this mat-card section into a user.component -->
+  <!-- todo: add router link to this mat-card/ user component -->
   <mat-card >
     <mat-card-header>
       <mat-card-title>{{ user.fullname }}</mat-card-title>
@@ -14,8 +16,8 @@
     <mat-card-content>{{ user.orientation }}</mat-card-content>
     <mat-card-content>{{ user.bio }}</mat-card-content>
     <mat-card-actions>
-      <!-- Add router link to this button -->
-      <button>View Profile</button>
+
+      <button (click)="chatWithUser(user.id)">Chat now</button>
     </mat-card-actions>
   </mat-card>
 </div>

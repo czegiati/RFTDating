@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/home","/register","/login").permitAll() //anyone can access these
+
                 //.anyRequest().authenticated() //only authorized users can access these (in this case logged in users)
                 //.and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 /*.and()

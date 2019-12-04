@@ -1,41 +1,65 @@
-import {Injectable} from '@angular/core';
-import {User} from '../models/user';
-import {ROOT_URL} from './service.constants';
-import {HttpClient} from '@angular/common/http';
-import {RegisterCredentials} from '../models/register-credentials.model';
-import { Observable, Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { User } from '../models/user';
+import { ROOT_URL } from './service.constants';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { RegisterCredentials } from '../models/register-credentials.model';
+import { ReplaySubject, Subject } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { getUserFromServerObject } from './user-utilities';
+import { IS_LOGGING_ENABLED } from '../app.constants';
+
+const USER_COOKIE_NAME = 'user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private cookieService: CookieService) {
+      // Check if there was a logged in user stored in the cookies.
+      const cookieText = cookieService.get(USER_COOKIE_NAME);
+      if (!cookieText) { return; }
 
-  // Creates a new Observable we can put messages on.
-  public isLoggedIn$: Subject<boolean> = new Subject<boolean>();
-  public loggedInUserId$: Subject<string> = new Subject<string>();
-
-  public login(username: string, password: string): Promise<boolean> {
-    return this.http.post<string>(ROOT_URL + '/login',
-      `username=${username}&password=${password}`)
-      .toPromise()
-      .then((res: string) => {
-        console.log('Successful Login userId: ', res);
-        this.isLoggedIn$.next(true);
-        this.loggedInUserId$.next(res);
-        return true;
-      })
-      .catch(() => {
-        console.log('Unsuccessful login');
-        this.isLoggedIn$.next(false);
-        this.loggedInUserId$.next(null);
-        return false;
-      });
+      let user: User;
+      try {
+          user = JSON.parse(cookieService.get(USER_COOKIE_NAME));
+      } catch (e) {
+          console.assert(IS_LOGGING_ENABLED, 'No logged in user found!');
+      }
+      if (user) {
+        this.setCurrentUser(user);
+      }
   }
 
+  // Creates a new Observable we can put messages on.
+  public currentUser$: Subject<User> = new ReplaySubject<User>(1);
+
+  public login(username: string, password: string): Promise<boolean> {
+    return this.http.post<any>(ROOT_URL + '/login', `username=${username}&password=${password}`,
+        { observe: 'response'})
+        .toPromise()
+        .then((res: HttpResponse<string>) => {
+          console.log('Successful Login userId: ', res);
+
+          const user = getUserFromServerObject(res.body);
+          this.setCurrentUser(user);
+
+          // Storing the logged in user in a cookie.
+          this.cookieService.set('user', JSON.stringify(user));
+          return true;
+        })
+        .catch(() => {
+          console.log('Unsuccessful login, removing user information.');
+          this.logout();
+          return false;
+        });
+  }
+
+  // @todo wire up button with this function
   public logout(): void {
-    // @todo implement logout
+    this.currentUser$.next( null);
+    this.cookieService.delete(USER_COOKIE_NAME);
   }
 
   public register(credentials: RegisterCredentials): Promise<User> {
@@ -46,6 +70,15 @@ export class AuthService {
       sexualOrientation: credentials.orientation,
       email: credentials.email,
       birthdate: credentials.birthdate,
-      password: credentials.password}).toPromise();
+      password: credentials.password
+    }).toPromise();
   }
+
+    /**
+     * Sets the current user. Also sends isLoggedIn events.
+     * @param user the logged in User object.
+     */
+    private setCurrentUser(user: User) {
+        this.currentUser$.next(user);
+    }
 }
