@@ -122,6 +122,7 @@
          <td><p type="text" th:text="${myuser.username}"><p/></td>
       </tr>
 
+
       <tr>
          <td><label name="password"  title="The 2 passwords must match! No other restrictions are specified!">Password: </label></td>
          <form th:action="@{/logedin/profile(type=password)}" method="post" title="The 2 passwords must match! No other restrictions are specified!">
@@ -196,7 +197,7 @@
         </form>
 
         <tr>
-            <td><p>Picture: </p><img style="height:200px;width:125px;"
+            <td><p>Picture: </p><img style="width:125px;"
                                      th:src="@{'data:image/png;base64,'+ *{T(org.springframework.util.Base64Utils).encodeToString(myfile)}}"/>
             </td>
             <form th:action="@{/logedin/profile(type=picture)}" method="POST" enctype="multipart/form-data">
