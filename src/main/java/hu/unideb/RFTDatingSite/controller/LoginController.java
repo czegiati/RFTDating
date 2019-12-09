@@ -183,9 +183,8 @@ public class LoginController
                   u.setPassword(user.getPassword());
                   userService.updateUser(u,p);
               }else {
-                  model.addAttribute("myuser",u);
-                  MyController.setRegistrationModel(model);
-                  return "myprofileview";
+                  model.addAttribute("errorM",new String("halpme"));
+                  return "redirect:/logedin/profile";
               }
               break;
           case "picture":
@@ -204,9 +203,8 @@ public class LoginController
           case "email":
               if(userService.isEmail(user.getEmail()))
               {
-                  model.addAttribute("myuser",u);
-                  MyController.setRegistrationModel(model);
-                  return "myprofileview";
+                  model.addAttribute("errorM",new String("email"));
+                  return "redirect:/logedin/profile";
               }
               break;
           case "sexualOrientation":
