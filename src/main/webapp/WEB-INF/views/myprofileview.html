@@ -112,34 +112,35 @@
 </div>
 <div class="main">
     <h1>Profile Details:</h1>
+    <div id="errors" th:if="${(param.errorM != null)}" style="color:red;width:100%; text-align:center;">
+        Error when tying to change password or email address!
+    </div>
     <table>
 
-        <tr>
-            <td><label name="username">Username: </label></td>
-            <td><p type="text" th:text="${myuser.username}">
-                <p/></td>
-        </tr>
+      <tr>
+         <td><label name="username">Username: </label></td>
+         <td><p type="text" th:text="${myuser.username}"><p/></td>
+      </tr>
 
-        <tr>
-            <td><label name="password">Password: </label></td>
-            <form th:action="@{/logedin/profile(type=password)}" method="post">
-                <td>
-                    <input type="password" th:text="null" th:field="*{myuser.password}">
-                    <p style="display:inline-block;"> Password again:</p>
-                    <input type="password" th:text="null" th:field="*{myuser.bio}">
-                </td>
-                <td><input class="button" type="submit" value="Change"></td>
-            </form>
-        </tr>
+      <tr>
+         <td><label name="password"  title="The 2 passwords must match! No other restrictions are specified!">Password: </label></td>
+         <form th:action="@{/logedin/profile(type=password)}" method="post" title="The 2 passwords must match! No other restrictions are specified!">
+            <td>
+               <input type="password" th:text="null" th:field="*{myuser.password}">
+               <p style="display:inline-block;">   Password again:</p>
+               <input type="password" th:text="null" th:field="*{myuser.bio}">
+            </td>
+            <td><input class="button" type="submit" value="Change"></td>
+         </form>
+      </tr>
 
-        <tr>
-            <td><label name="email">Email address: </label></td>
-            <form th:action="@{/logedin/profile(type=email)}" method="post">
-                <td><input type="text" th:field="*{myuser.email}"></td>
-                <td><input class="button" type="submit" value="Change">
-                    <p th:if="${errorM}" th:value="${errorM}"></p></td>
-            </form>
-        </tr>
+      <tr>
+         <td><label name="email"  title="Must be unique!">Email address: </label></td>
+         <form th:action="@{/logedin/profile(type=email)}" method="post">
+         <td><input type="text" th:field="*{myuser.email}"></td>
+            <td><input class="button" type="submit" value="Change"><p th:value="${errorM}"></p></td>
+         </form>
+      </tr>
 
         <tr>
             <td><label name="full_name">Name: </label></td>
