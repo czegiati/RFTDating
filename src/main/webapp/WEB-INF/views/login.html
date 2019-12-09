@@ -1,20 +1,134 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <head>
-   <title>Spring Security Example </title>
+    <title>B Mine Dating App</title>
+    <style>
+
+        .material-icons.md-18 {
+            margin-left: 5px;
+            font-size: 18px;
+        }
+
+        body {
+            font-size: 18px;
+            margin: auto;
+            background-color: #e6e6fa;
+            display: flex;
+            flex-flow: wrap;
+            justify-content: center;
+        }
+
+        .topNav {
+            background-color: #673ab7;
+            overflow: hidden;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 50px;
+            border-bottom: 10px;
+        }
+
+        .topNav a.appName {
+            horiz-align: left;
+            float: left;
+        }
+
+        .topNav a {
+            display: inline-flex;
+            text-decoration: none;
+            color: white;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            vertical-align: middle;
+            horiz-align: right;
+            float: right;
+        }
+
+
+        .main {
+            color: #482980;
+            font-weight: bold;
+            width: 20%;
+        }
+
+        .main div.button {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .main div {
+            padding-top: 25px;
+            display: flex;
+            flex-flow: wrap;
+            justify-content: space-between;
+        }
+
+        label {
+            padding-right: 10px;
+        }
+
+        input {
+            font-size: 16px;
+        }
+
+
+        .button {
+            transition: .4s;
+            float: right;
+            background: #652296;
+            border-radius: 8px;
+            margin: auto;
+            color: white;
+            font-weight: bold;
+            border: 4px solid #652296;
+            margin-right: 5%;
+            padding: 4px;
+            position: relative;
+            bottom: -3px;
+        }
+
+        .button:hover {
+            transition: .4s;
+            border: 4px solid #d4c1f5;
+            border-radius: 8px;
+        }
+
+        .error {
+            color: crimson;
+        }
+
+
+    </style>
 </head>
 <body>
-<div th:if="${param.error}">
-   Invalid username and password.
+<div class="topNav">
+    <a class="appName">B Mine Dating App<i class="material-icons md-18">favorite</i></a>
+    <a class="active" href="/">Home<i class="material-icons md-18">home</i></a>
+    <a href="register">Register<i class="material-icons md-18">person_add</i></a>
 </div>
-<div th:if="${param.logout}">
-   You have been logged out.
+<div class="main">
+    <form th:action="@{/login}" method="post" th:object="${login}">
+        <div>
+            <label>User Name: </label>
+            <input type="text" name="username" th:field="*{username}" th:value="username"/>
+        </div>
+        <div>
+            <label>Password: </label>
+            <input type="password" name="password" th:field="*{password}" th:value="password"/>
+        </div>
+        <div th:if="${param.error}" class="error">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}" class="error">
+            You have been logged out.
+        </div>
+        <div><input class="button" type="submit" value="Sign In"/></div>
+    </form>
 </div>
-<form th:action="@{/login}" method="post" th:object="${login}">
-   <div><label> User Name : <input type="text" name="username" th:field="*{username}" th:value="username"/> </label></div>
-   <div><label> Password: <input type="password" name="password" th:field="*{password}" th:value="password"/> </label></div>
-   <div><input type="submit" value="Sign In"/></div>
-</form>
 </body>
 </html>

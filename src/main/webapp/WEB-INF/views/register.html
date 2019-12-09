@@ -1,9 +1,115 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
    <head>
-      <link href = "css/styles.css" rel = "stylesheet"/>
-      <title>Dating Site Registration</title>
+      <!--<link href = "css/styles.css" rel = "stylesheet"/>-->
+      <title>B Mine Dating App</title>
+      <style>
+
+         .material-icons.md-18 {
+            margin-left: 5px;
+            font-size: 18px;
+         }
+
+         body {
+            font-size: 18px;
+            margin: auto;
+            background-color: #e6e6fa;
+            display: flex;
+            flex-flow: column;
+         }
+
+         .topNav {
+            background-color: #673ab7;
+            overflow: hidden;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 50px;
+            border-bottom: 10px;
+         }
+
+         .topNav a.appName {
+            horiz-align: left;
+            float: left;
+         }
+
+         .topNav a {
+            display: inline-flex;
+            text-decoration: none;
+            color: white;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            vertical-align: middle;
+            horiz-align: right;
+            float: right;
+         }
+
+
+         .main {
+            color: #482980;
+            font-weight: bold;
+            width: 20%;
+         }
+
+         .main div.button {
+            display: flex;
+            justify-content: flex-end;
+         }
+
+         .main div {
+            padding-top: 25px;
+            display: flex;
+            flex-flow: wrap;
+            justify-content: space-between;
+         }
+
+         label {
+            padding-right: 10px;
+         }
+
+         input {
+            font-size: 16px;
+         }
+
+
+         .button {
+            transition: .4s;
+            float: right;
+            background: #652296;
+            border-radius: 8px;
+            margin: auto;
+            color: white;
+            font-weight: bold;
+            border: 4px solid #652296;
+            margin-right: 5%;
+            padding: 4px;
+            position: relative;
+            bottom: -3px;
+         }
+
+         .button:hover {
+            transition: .4s;
+            border: 4px solid #d4c1f5;
+            border-radius: 8px;
+         }
+
+         .error {
+            color: crimson;
+         }
+
+
+      </style>
    </head>
    <body>
+   <div class="topNav">
+      <a class="appName">B Mine Dating App<i class="material-icons md-18">favorite</i></a>
+      <a class="active" href="/">Home<i class="material-icons md-18">home</i></a>
+      <a href="register">Register<i class="material-icons md-18">person_add</i></a>
+   </div>
+   <div class="main">
    <h3>Registration form</h3>
    <form action="#" th:action="@{/register}" th:object="${User}"
          method="post">
@@ -53,9 +159,10 @@
          <td><p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect username</p></td>
       </tr>
       <tr>
-         <td><input type="submit" id="submitButton" th:value="register" /></td>
+         <td><input class="button" type="submit" id="submitButton" th:value="Register" /></td>
       </tr>
    </table>
    </form>
+   </div>
    </body>
 </html>

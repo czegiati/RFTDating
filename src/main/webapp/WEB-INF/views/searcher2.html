@@ -1,105 +1,178 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <head>
-    <title>Search</title>
+    <title>B Mine Dating App</title>
     <style>
-        .table-head{
-  color:white;
-  background:gray;
-  margin-left:5%;
-  margin-right:5%;
-  height:40px;
-  text-align:center;
-}
-.tlabel{
-  display:inline;
-  margin:auto;
-  margin-left:5%;
-  margin-right:5%;
-line-height: 40px;
-}
+        .material-icons.md-18 {
+            margin-left: 5px;
+            font-size: 18px;
+        }
 
-li{
-list-style-type: none;
-}
+        body {
+            font-size: 18px;
+            margin: auto;
+            background-color: #e6e6fa;
+            display: flex;
+            flex-flow: column;
+        }
 
-.table-element{
-    color:white;
+        .topNav {
+            background-color: #673ab7;
+            overflow: hidden;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 50px;
+            border-bottom: 10px;
+        }
 
-      margin: 0;
-  padding: 0;
-  background:gray;
-  margin-left:10%;
-  margin-right:10%;
-  height:40px;
-  text-align:center;
-}
+        .topNav a.appName {
+            horiz-align: left;
+            float: left;
+        }
 
-.button{
-  transition:.4s;
-  float:right;
-  background:lightblue;
-color:4px solid darkblue;
-  border-radius: 8px;
-  align: auto;
-  margin:auto;
-  color:purple;
-  font-weight:bold;
-   border:4px solid darkblue;
-   margin-right:5%;
-  padding: 4px;
-  position:relative;
-  bottom:-3px;
-}
-.button:hover{
-  transition:.4s;
-  border:4px solid lightblue;
-  border-radius: 8px;
-}
-.button:active{
-}
+        .topNav a {
+            display: inline-flex;
+            text-decoration: none;
+            color: white;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            vertical-align: middle;
+            horiz-align: right;
+            float: right;
+        }
+
+        h1, form {
+            margin: 25px;
+            color: #482980;
+        }
+
+        label {
+            margin-right: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #482980;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px;
+        }
+
+        .table-head {
+            color: white;
+            background: #673ab7;
+            margin-left: 5%;
+            margin-right: 5%;
+            height: 40px;
+            text-align: center;
+        }
+
+        .tlabel {
+            display: inline;
+            margin: auto;
+            margin-left: 5%;
+            margin-right: 5%;
+            line-height: 40px;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .table-element {
+            color: white;
+
+            margin: 0;
+            padding: 0;
+            background: mediumpurple;
+            margin-left: 10%;
+            margin-right: 10%;
+            height: 40px;
+            text-align: center;
+        }
+
+        .button {
+            transition: .4s;
+            float: right;
+            background: #652296;
+            border-radius: 8px;
+            margin: auto;
+            color: white;
+            font-weight: bold;
+            border: 4px solid #652296;
+            margin-right: 5%;
+            padding: 4px;
+            position: relative;
+            bottom: -3px;
+        }
+
+        .button:hover {
+            transition: .4s;
+            border: 4px solid #d4c1f5;
+            border-radius: 8px;
+        }
+
+        .button:active {
+        }
     </style>
 </head>
 <body>
-<h1 th:inline="text">Search!</h1>
-<form action="#" th:action="@{/logedin/search}" th:object="${SearchFormObj}"
-      method="post">
-    <table>
-        <tr>
-            <label>Minimum: </label>
-            <input type="number" th:field="*{min}"/>
-        </tr>
-        <tr>
-            <td>
-                <lable class="label">Maximum: </lable>
-                <input type="number" th:field="*{max}"/>
-            </td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Search"/> </td>
-        </tr>
-    </table>
-</form>
-<div class="table-head">
-    <div class="tlabel">username</div>
-    <div class="tlabel">age</div>
-    <div class="tlabel">sex</div>
-    <div class="tlabel">sexualorientation</div>
+<div class="topNav">
+    <a class="appName">B Mine Dating App<i class="material-icons md-18">favorite</i></a>
+    <a href="/logout">Sign Out<i class="material-icons md-18">input</i></a>
+    <a class="active" href="/">Home<i class="material-icons md-18">home</i></a>
+    <a href="profile">Profile<i class="material-icons md-18">person</i></a>
 </div>
+<div class="main">
+    <h1 th:inline="text">Search:</h1>
+    <form action="#" th:action="@{/logedin/search}" th:object="${SearchFormObj}"
+          method="post">
+        <table>
+            <tr>
+                <td>
+                    <label>Minimum age: </label>
+                    <input type="number" th:field="*{min}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Maximum age: </label>
+                    <input type="number" th:field="*{max}"/>
+                </td>
+            </tr>
+            <tr>
+                <td><input class="button" type="submit" value="Search"/></td>
+            </tr>
+        </table>
+    </form>
+    <div class="table-head">
+        <div class="tlabel">Username</div>
+        <div class="tlabel">Age</div>
+        <div class="tlabel">Sex</div>
+        <div class="tlabel">Sexual Orientation</div>
+    </div>
 
-<ul th:each="user : ${SearchUsersObj}">
-    <li>
-        <form th:action="@{/logedin/search/__${user.username}__}">
-            <div class="table-element">
-                <div  class="tlabel" th:text="${user.username}"></div>
-                <div  class="tlabel" th:text="${user.age}"></div>
-                <div  class="tlabel" th:text="${user.sex}"></div>
-                <div  class="tlabel" th:text="${user.sexualOrientation}"></div>
-                <button class="button" type="submit" th:name="username" th:value="${user.username}">View profile</button>
-            </div>
-        </form>
-    </li>
+    <ul th:each="user : ${SearchUsersObj}">
+        <li>
+            <form th:action="@{/logedin/search/__${user.username}__}">
+                <div class="table-element">
+                    <div class="tlabel" th:text="${user.username}"></div>
+                    <div class="tlabel" th:text="${user.age}"></div>
+                    <div class="tlabel" th:text="${user.sex}"></div>
+                    <div class="tlabel" th:text="${user.sexualOrientation}"></div>
+                    <button class="button" type="submit" th:name="username" th:value="${user.username}">View profile
+                    </button>
+                </div>
+            </form>
+        </li>
 
-</ul>
+    </ul>
+</div>
 </body>
 </html>
