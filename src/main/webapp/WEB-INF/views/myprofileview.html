@@ -2,24 +2,24 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-   <head>
-      <!--<link href = "css/styles.css" rel = "stylesheet"/>-->
-      <title>B Mine Dating App</title>
-      <style>
-         .material-icons.md-18 {
+<head>
+    <!--<link href = "css/styles.css" rel = "stylesheet"/>-->
+    <title>B Mine Dating App</title>
+    <style>
+        .material-icons.md-18 {
             margin-left: 5px;
             font-size: 18px;
-         }
+        }
 
-         body {
+        body {
             font-size: 18px;
             margin: auto;
             background-color: #e6e6fa;
             display: flex;
             flex-flow: column;
-         }
+        }
 
-         .topNav {
+        .topNav {
             background-color: #673ab7;
             overflow: hidden;
             top: 0px;
@@ -27,14 +27,14 @@
             width: 100%;
             height: 50px;
             border-bottom: 10px;
-         }
+        }
 
-         .topNav a.appName {
+        .topNav a.appName {
             horiz-align: left;
             float: left;
-         }
+        }
 
-         .topNav a {
+        .topNav a {
             display: inline-flex;
             text-decoration: none;
             color: white;
@@ -45,9 +45,40 @@
             vertical-align: middle;
             horiz-align: right;
             float: right;
-         }
+        }
 
-         .button {
+        .main {
+           color: #482980;
+           font-weight: bold;
+           width: 20%;
+           margin-left: 20px;
+        }
+
+        label, p {
+           color: #482980;
+           font-weight: bold;
+           font-size: 18px;
+        }
+
+        input {
+           font-size: 16px;
+        }
+
+        table {
+           border-spacing: 10px;
+        }
+
+        input, select {
+           height: 25px;
+           width: 180px;
+        }
+
+        textarea {
+           max-width: 500px;
+           max-height: 100px;
+        }
+
+        .button {
             transition: .4s;
             float: right;
             background: #652296;
@@ -60,117 +91,124 @@
             padding: 4px;
             position: relative;
             bottom: -3px;
-         }
+            width: auto;
+            height: auto;
+        }
 
-         .button:hover {
+        .button:hover {
             transition: .4s;
             border: 4px solid #d4c1f5;
             border-radius: 8px;
-         }
+        }
 
-         .button:active {
-         }
-      </style>
-   </head>
-   <body>
-   <div class="topNav">
-      <a class="appName">B Mine Dating App<i class="material-icons md-18">favorite</i></a>
-      <a href="/logout">Sign Out<i class="material-icons md-18">input</i></a>
-      <a class="active" href="/">Home<i class="material-icons md-18">home</i></a>
-      <a href="profile">Profile<i class="material-icons md-18">person</i></a>
-   </div>
-   <div class="main">
-   <h3>Profile Details:</h3>
-   <table>
+    </style>
+</head>
+<body>
+<div class="topNav">
+    <a class="appName">B Mine Dating App<i class="material-icons md-18">favorite</i></a>
+    <a href="/logout">Sign Out<i class="material-icons md-18">input</i></a>
+    <a class="active" href="/logedin">Home<i class="material-icons md-18">home</i></a>
+    <a href="/logedin/search">Search<i class="material-icons md-18">search</i></a>
+</div>
+<div class="main">
+    <h1>Profile Details:</h1>
+    <table>
 
-      <tr>
-         <td><label name="username">Username: </label></td>
-         <td><p type="text" th:text="${myuser.username}"><p/></td>
-      </tr>
+        <tr>
+            <td><label name="username">Username: </label></td>
+            <td><p type="text" th:text="${myuser.username}">
+                <p/></td>
+        </tr>
 
-      <tr>
-         <td><label name="password">Password: </label></td>
-         <form th:action="@{/logedin/profile(type=password)}" method="post">
-            <td>
-               <input type="password" th:text="null" th:field="*{myuser.password}">
-               <p style="display:inline-block;">   Password again:</p>
-               <input type="password" th:text="null" th:field="*{myuser.bio}">
+        <tr>
+            <td><label name="password">Password: </label></td>
+            <form th:action="@{/logedin/profile(type=password)}" method="post">
+                <td>
+                    <input type="password" th:text="null" th:field="*{myuser.password}">
+                    <p style="display:inline-block;"> Password again:</p>
+                    <input type="password" th:text="null" th:field="*{myuser.bio}">
+                </td>
+                <td><input class="button" type="submit" value="Change"></td>
+            </form>
+        </tr>
+
+        <tr>
+            <td><label name="email">Email address: </label></td>
+            <form th:action="@{/logedin/profile(type=email)}" method="post">
+                <td><input type="text" th:field="*{myuser.email}"></td>
+                <td><input class="button" type="submit" value="Change">
+                    <p th:if="${errorM}" th:value="${errorM}"></p></td>
+            </form>
+        </tr>
+
+        <tr>
+            <td><label name="full_name">Name: </label></td>
+            <form th:action="@{/logedin/profile(type=name)}" method="post">
+                <td><input type="text" th:field="*{myuser.full_name}"></td>
+                <td><input class="button" type="submit" value="Change"></td>
+            </form>
+        </tr>
+
+        <tr>
+            <td><label name="sex">Sex: </label></td>
+            <form th:action="@{/logedin/profile(type=sex)}" method="post">
+                <td>
+                    <select th:field="*{myuser.sex}">
+                        <option th:each="sex1:${sexList}" th:text="${sex1}" th:value="${sex1}"
+                                th:selected="${sex1==myuser.sex}"/>
+                    </select>
+                </td>
+                <td><input class="button" type="submit" value="Change"></td>
+            </form>
+        </tr>
+
+        <tr>
+            <td><label name="sexual_orientation">Sexual Orientation: </label></td>
+            <form th:action="@{/logedin/profile(type=sexualOrientation)}" method="post">
+                <td>
+                    <select th:field="*{myuser.sexualOrientation}">
+                        <option th:each="sexo1:${sexoList}" th:text="${sexo1}" th:value="${sexo1}"
+                                th:selected="${sexo1==myuser.sexualOrientation}"/>
+                    </select>
+                </td>
+                <td>
+                    <input class="button" type="submit" value="Change">
+                </td>
+            </form>
+        </tr>
+
+        <tr>
+            <td><label name="Bdate">Birth date: </label></td>
+            <form th:action="@{/logedin/profile(type=birthdate)}" method="post">
+                <td><input type="date" th:value="${myuser.birthdate}" th:field="*{myuser.birthdate}" required></td>
+                <td><input class="button" type="submit" value="Change"></td>
+            </form>
+        </tr>
+
+        <form action="#" th:action="@{/logedin/profile(type=bio)}" method="post">
+            <tr>
+                <td><label name="bio">Bio </label></td>
+                <td><textarea th:field="*{myuser.bio}" th:text="${myuser.bio}"
+                              style="width:600px;height:250px;resize:none;"></textarea></td>
+                <td><input class="button" type="submit" value="Change"></td>
+            </tr>
+        </form>
+
+        <tr>
+            <td><p>Picture: </p><img style="height:200px;width:125px;"
+                                     th:src="@{'data:image/png;base64,'+ *{T(org.springframework.util.Base64Utils).encodeToString(myfile)}}"/>
             </td>
-            <td><input class="button" type="submit" value="Change"></td>
-         </form>
-      </tr>
+            <form th:action="@{/logedin/profile(type=picture)}" method="POST" enctype="multipart/form-data">
+                <td>
+                    <input class="button" type="file" name="file" value="Browse">
+                </td>
+                <td>
+                    <input class="button" type="submit" value="Upload">
+                </td>
+            </form>
+        </tr>
 
-      <tr>
-         <td><label name="email">Email address: </label></td>
-         <form th:action="@{/logedin/profile(type=email)}" method="post">
-         <td><input type="text" th:field="*{myuser.email}"></td>
-            <td><input class="button" type="submit" value="Change"><p th:if="${errorM}" th:value="${errorM}"></p></td>
-         </form>
-      </tr>
-
-      <tr>
-         <td><label name="full_name">Name: </label></td>
-         <form th:action="@{/logedin/profile(type=name)}" method="post">
-         <td><input type="text" th:field="*{myuser.full_name}"></td>
-            <td><input class="button" type="submit" value="Change"></td>
-         </form>
-      </tr>
-
-      <tr>
-      <td><label name="sex">Sex: </label></td>
-      <form th:action="@{/logedin/profile(type=sex)}" method="post">
-         <td>
-            <select th:field="*{myuser.sex}">
-               <option th:each="sex1:${sexList}" th:text="${sex1}" th:value="${sex1}" th:selected="${sex1==myuser.sex}"/>
-            </select>
-         </td>
-         <td><input class="button" type="submit" value="Change"> </td>
-      </form>
-   </tr>
-
-      <tr>
-         <td><label name="sexual_orientation">Sexual Orientation: </label></td>
-         <form th:action="@{/logedin/profile(type=sexualOrientation)}" method="post">
-         <td>
-            <select th:field="*{myuser.sexualOrientation}">
-               <option th:each="sexo1:${sexoList}" th:text="${sexo1}" th:value="${sexo1}" th:selected="${sexo1==myuser.sexualOrientation}"/>
-            </select>
-         </td>
-         <td>
-            <input class="button" type="submit" value="Change">
-         </td>
-         </form>
-      </tr>
-
-      <tr>
-         <td><label name="Bdate">Birthdate: </label></td>
-         <form th:action="@{/logedin/profile(type=birthdate)}" method="post">
-         <td><input type="date" th:value="${myuser.birthdate}" th:field="*{myuser.birthdate}" required></td>
-            <td><input class="button" type="submit" value="Change"></td>
-         </form>
-      </tr>
-
-      <form action="#" th:action="@{/logedin/profile(type=bio)}" method="post">
-         <tr>
-            <td><label name="bio">Bio </label></td>
-            <td><textarea th:field="*{myuser.bio}" th:text="${myuser.bio}" style="width:600px;height:250px;resize:none;"></textarea></td>
-            <td><input class="button" type="submit" value="Change"></td>
-         </tr>
-      </form>
-
-      <tr>
-         <td><p>Picture: </p><img  style="height:200px;width:125px;" th:src="@{'data:image/png;base64,'+ *{T(org.springframework.util.Base64Utils).encodeToString(myfile)}}" /></td>
-         <form th:action="@{/logedin/profile(type=picture)}" method="POST" enctype="multipart/form-data">
-         <td>
-            <input class="button" type="file" name="file">
-         </td>
-         <td>
-            <input class="button" type="submit" value="Upload" >
-         </td>
-         </form>
-      </tr>
-
-   </table>
-   </div>
-   </body>
+    </table>
+</div>
+</body>
 </html>

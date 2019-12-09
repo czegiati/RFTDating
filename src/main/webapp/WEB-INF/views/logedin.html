@@ -51,7 +51,7 @@
         .main {
             color: #482980;
             width: 20%;
-            margin-left: 25px;
+            margin-left: 20px;
         }
 
         .button {
@@ -82,13 +82,13 @@
 <div class="topNav">
     <a class="appName">B Mine Dating App<i class="material-icons md-18">favorite</i></a>
     <a href="logout">Sign Out<i class="material-icons md-18">input</i></a>
-    <a class="active" href="/">Home<i class="material-icons md-18">home</i></a>
+    <a class="active" href="/logedin">Home<i class="material-icons md-18">home</i></a>
     <a href="logedin/search">Search<i class="material-icons md-18">search</i></a>
     <a href="logedin/profile">Profile<i class="material-icons md-18">person</i></a>
 </div>
 <div class="main">
-    <h2 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!
-        Click on Search to find people to chat with!</h2>
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <h2>Click on Search to find people to chat with!</h2>
     <p th:text="*{username}"></p>
     <form th:action="@{/logedin/search}" method="get">
         <input class="button" type="submit" value="Search"/>

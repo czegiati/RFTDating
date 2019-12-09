@@ -17,8 +17,7 @@
             margin: auto;
             background-color: #e6e6fa;
             display: flex;
-            flex-flow: wrap;
-            justify-content: center;
+            flex-flow: column;
         }
 
         .topNav {
@@ -54,26 +53,23 @@
             color: #482980;
             font-weight: bold;
             width: 20%;
-        }
-
-        .main div.button {
-            display: flex;
-            justify-content: flex-end;
+            margin-left: 20px;
         }
 
         .main div {
-            padding-top: 25px;
             display: flex;
             flex-flow: wrap;
             justify-content: space-between;
         }
 
         label {
-            padding-right: 10px;
+            margin-bottom: 10px;
         }
 
-        input {
+        .field {
             font-size: 16px;
+            margin-bottom: 10px;
+            width: 100%;
         }
 
 
@@ -112,14 +108,15 @@
     <a href="register">Register<i class="material-icons md-18">person_add</i></a>
 </div>
 <div class="main">
+    <h1>Sign in:</h1>
     <form th:action="@{/login}" method="post" th:object="${login}">
         <div>
             <label>User Name: </label>
-            <input type="text" name="username" th:field="*{username}" th:value="username"/>
+            <input class="field" type="text" name="username" th:field="*{username}" th:value="username"/>
         </div>
         <div>
             <label>Password: </label>
-            <input type="password" name="password" th:field="*{password}" th:value="password"/>
+            <input class="field" type="password" name="password" th:field="*{password}" th:value="password"/>
         </div>
         <div th:if="${param.error}" class="error">
             Invalid username and password.

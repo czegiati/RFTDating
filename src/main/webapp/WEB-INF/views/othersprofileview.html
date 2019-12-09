@@ -69,40 +69,58 @@
 
         .button:active {
         }
+
+        .main {
+           color: #482980;
+           font-weight: bold;
+           width: 20%;
+           margin-left: 20px;
+        }
+
+        label, p {
+           color: #482980;
+           font-weight: bold;
+           font-size: 18px;
+        }S
+
+        table {
+           border-spacing: 15px;
+        }
     </style>
 </head>
 <body>
 <div class="topNav">
     <a class="appName">B Mine Dating App<i class="material-icons md-18">favorite</i></a>
     <a href="/logout">Sign Out<i class="material-icons md-18">input</i></a>
-    <a class="active" href="/">Home<i class="material-icons md-18">home</i></a>
-    <a href="profile">Profile<i class="material-icons md-18">person</i></a>
+    <a class="active" href="/logedin">Home<i class="material-icons md-18">home</i></a>
+    <a href="/logedin/search">Search<i class="material-icons md-18">search</i></a>
+    <a href="/logedin/profile">Profile<i class="material-icons md-18">person</i></a>
 </div>
 <div class="main">
-    <h3>This is a Profile of another User</h3>
+    <h1>User Profile:</h1>
     <table>
         <tr>
-            <td><label name="username">Username: </label></td>
+            <td><label name="username">Username:</label></td>
             <td><p th:text="${user.username}"></p></td>
         </tr>
         <tr>
-            <td><label name="age">Age: </label></td>
+            <td><label name="age">Age:</label></td>
             <td><p th:text="${user.age}"></p></td>
         </tr>
         <tr>
-            <td><label name="sex">Sex: </label></td>
+            <td><label name="sex">Sex:</label></td>
             <td><p th:text="${user.sex}"></p></td>
         </tr>
         <tr>
-            <td><label name="so">Sexual Orientation: </label></td>
+            <td><label name="so">Sexual Orientation:</label></td>
             <td><p th:text="${user.so}"></p></td>
         </tr>
         <tr>
-            <td><label name="bio">Bio </label></td>
+            <td><label name="bio">Bio:</label></td>
             <td><p th:text="${user.bio}"></p></td>
         </tr>
         <tr>
-            <td><label name="image">Image: </label></td>
+            <td><label name="image">Image:</label></td>
             <td><img style="height:200px;width:125px;" th:src="@{'data:image/png;base64,'+ ${user.Picture}}"/></td>
         </tr>
     </table>
