@@ -1,15 +1,38 @@
 package hu.unideb.RFTDatingSite.Model;
 
+import hu.unideb.RFTDatingSite.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.*;
+import java.io.IOException;
+import java.util.Date;
+
+@Entity
+@Table(name ="ChatMessage")
 public class ChatMessage {
+
+    @Autowired
+    @Transient
+    UserService userService;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Integer id;
+
+    @Transient
     private MessageType type;
+
+    @Column(name = "message")
     private String content;
     private String sender;
     private String receiver;
 
+
     public enum MessageType {
         CHAT,
         JOIN,
-        LEAVE
+        LEAVE,
+        JOINED
     }
 
     public MessageType getType() {
