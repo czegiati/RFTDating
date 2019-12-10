@@ -28,9 +28,9 @@ public class ChatController {
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+    public ChatMessage[] sendMessage(@Payload ChatMessage chatMessage) {
         chatMessageRepository.save(chatMessage);
-        return chatMessage;
+        return new ChatMessage[]{chatMessage};
     }
 
    /* @MessageMapping("/chat.addUser")
@@ -48,11 +48,12 @@ public class ChatController {
         return chatMessage;
     }*/
 
-   public void Recall(ChatMessage chatMessage,String username){
-       chatMessage.setType(ChatMessage.MessageType.JOINED);
-       chatMessage.setJr(username);
-       System.out.println("from: "+chatMessage.getSender()+" to: "+chatMessage.getReceiver()+" "+chatMessage.getContent());
-       this.template.convertAndSend("/topic/public",chatMessage);
+   public void Recall(Set<ChatMessage> chatMessage,String username){
+       for(ChatMessage c:chatMessage) {
+           c.setType(ChatMessage.MessageType.JOINED);
+           c.setJr(username);
+       }
+       this.template.convertAndSend("/topic/public",chatMessage.toArray());
    }
 
 
@@ -60,7 +61,7 @@ public class ChatController {
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage, ChatList chatList,
+    public ChatMessage[] addUser(@Payload ChatMessage chatMessage, ChatList chatList,
                                      SimpMessageHeaderAccessor headerAccessor) {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("Sender", chatMessage.getSender());
@@ -69,12 +70,9 @@ public class ChatController {
         String username = (String) headerAccessor.getSessionAttributes().get("Sender");
         String username2 = (String) headerAccessor.getSessionAttributes().get("Reciever");
         Set<ChatMessage> x= chatMessageRepository.getChatMessagesByUsers(username,username2);
-        System.out.println("addUser called | Recalled entities: ");
         //x.forEach(this::Recall);
-        for(ChatMessage c:x){
-            Recall(c,username);
-        }
-        return chatMessage;
+            Recall(x,username);
+        return new ChatMessage[]{chatMessage};
     }
 
 

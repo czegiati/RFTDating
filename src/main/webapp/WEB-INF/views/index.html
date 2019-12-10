@@ -482,8 +482,10 @@ var leaveButton = document.querySelector('#leave');
     }
 
   function onMessageReceived(payload) {
-        var message = JSON.parse(payload.body);
+        var message1 = JSON.parse(payload.body);
+        var message;
 
+for(message of message1){
         var messageElement = document.createElement('li');
         console.log("message received----"+message.content);
         if (message.sender == username || (message.receiver == username && message.sender == rec)) {
@@ -535,6 +537,7 @@ var leaveButton = document.querySelector('#leave');
             messageArea.scrollTop = messageArea.scrollHeight;
             }
         }
+    }
     }
 
 
