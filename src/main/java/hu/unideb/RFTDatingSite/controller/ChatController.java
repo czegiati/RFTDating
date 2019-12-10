@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.events.Event;
 
@@ -21,6 +22,9 @@ public class ChatController {
 
     @Autowired
     ChatMessageRepository chatMessageRepository;
+
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
@@ -44,13 +48,14 @@ public class ChatController {
         return chatMessage;
     }*/
 
-   @MessageMapping("/chat.Recall")
-   @SendTo("/topic/public")
-   public ChatMessage Recall(@Payload ChatMessage chatMessage){
+   public void Recall(ChatMessage chatMessage,String username){
        chatMessage.setType(ChatMessage.MessageType.JOINED);
+       chatMessage.setJr(username);
        System.out.println("from: "+chatMessage.getSender()+" to: "+chatMessage.getReceiver()+" "+chatMessage.getContent());
-       return chatMessage;
+       this.template.convertAndSend("/topic/public",chatMessage);
    }
+
+
 
 
     @MessageMapping("/chat.addUser")
@@ -64,8 +69,11 @@ public class ChatController {
         String username = (String) headerAccessor.getSessionAttributes().get("Sender");
         String username2 = (String) headerAccessor.getSessionAttributes().get("Reciever");
         Set<ChatMessage> x= chatMessageRepository.getChatMessagesByUsers(username,username2);
-
-        x.forEach(this::Recall);
+        System.out.println("addUser called | Recalled entities: ");
+        //x.forEach(this::Recall);
+        for(ChatMessage c:x){
+            Recall(c,username);
+        }
         return chatMessage;
     }
 

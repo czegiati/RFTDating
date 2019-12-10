@@ -26,6 +26,7 @@ public class ChatMessage {
     private String content;
     private String sender;
     private String receiver;
+    private String jr;
 
 
     public enum MessageType {
@@ -65,5 +66,13 @@ public class ChatMessage {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getJr() {
+        return jr;
+    }
+
+    public void setJr(String jr) {
+        this.jr = jr;
     }
 }
